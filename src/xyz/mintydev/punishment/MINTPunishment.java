@@ -20,9 +20,12 @@ public class MINTPunishment extends JavaPlugin {
 	public void onEnable() {
 		instance = this;
 		
+		saveDefaultConfig();
 		registerManagers();
 		registerCommands();
 		registerListeners();
+		
+		getLogger().info("Plugin enabled. Thanks for choosing MINTPunishment !");
 	}
 	
 	private void registerListeners() {
@@ -43,7 +46,7 @@ public class MINTPunishment extends JavaPlugin {
 
 	@Override
 	public void onDisable() {
-
+		getLogger().info("Plugin disabled. Thanks for choosing MINTPunishment !");
 	}
 	
 	/*

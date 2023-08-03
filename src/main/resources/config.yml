@@ -1,6 +1,6 @@
 mysql:
   ip: localhost
   database: minty
-  user: admin
+  user: root
   password: ""
   port: 3306

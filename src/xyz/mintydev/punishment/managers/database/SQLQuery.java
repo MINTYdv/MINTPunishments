@@ -2,15 +2,15 @@ package xyz.mintydev.punishment.managers.database;
 
 public enum SQLQuery {
 
-	CREATE_TABLE_PUNISHMENT(
+	CREATE_TABLE_ACTIVE(
         "CREATE TABLE IF NOT EXISTS `mpunishments_active` ("+
 		"`id` int NOT NULL AUTO_INCREMENT," +
         "`type` VARCHAR(16) NULL DEFAULT NULL," +
         "`uuid` VARCHAR(35) NULL DEFAULT NULL," +
         "`name` VARCHAR(16) NULL DEFAULT NULL," +
         "`operator` VARCHAR(16) NULL DEFAULT NULL," +
-        "`start` LONG DEFAULT NULL," +
-        "`end` LONG DEFAULT NULL," +
+        "`start` BIGINT DEFAULT NULL," +
+        "`end` BIGINT DEFAULT NULL," +
         "`reason` VARCHAR(255) NULL DEFAULT NULL," +
         "PRIMARY KEY (`id`))"
 	),
@@ -21,8 +21,8 @@ public enum SQLQuery {
         "`uuid` VARCHAR(35) NULL DEFAULT NULL," +
         "`name` VARCHAR(16) NULL DEFAULT NULL," +
         "`operator` VARCHAR(16) NULL DEFAULT NULL," +
-        "`start` LONG DEFAULT NULL," +
-        "`end` LONG DEFAULT NULL," +
+        "`start` BIGINT DEFAULT NULL," +
+        "`end` BIGINT DEFAULT NULL," +
         "`reason` VARCHAR(255) NULL DEFAULT NULL," +
         "PRIMARY KEY (`id`))"
 	);
@@ -37,7 +37,8 @@ public enum SQLQuery {
 	 * Getters & Setters
 	 * */
 	
-	public String getMySQLQuery() {
+	@Override
+	public String toString() {
 		return mySqlQuery;
 	}
 	

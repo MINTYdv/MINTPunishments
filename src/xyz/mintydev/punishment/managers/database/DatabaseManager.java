@@ -44,7 +44,7 @@ public class DatabaseManager {
 		}
 		
 		/* Create the default tables in the DB */
-		executeStatement(SQLQuery.CREATE_TABLE_PUNISHMENT);
+		executeStatement(SQLQuery.CREATE_TABLE_ACTIVE);
 		executeStatement(SQLQuery.CREATE_TABLE_EXPIRED);
 	}
 	
@@ -74,7 +74,7 @@ public class DatabaseManager {
 	}
 	
 	private synchronized ResultSet executeStatement(String sql, boolean result, Object... parameters) {
-    	try (Connection connection = dataSource.getConnection(); PreparedStatement statement = connection.prepareStatement(sql)) {
+		try (Connection connection = dataSource.getConnection(); PreparedStatement statement = connection.prepareStatement(sql)) {
 
     		for (int i = 0; i < parameters.length; i++) {
     			statement.setObject(i + 1, parameters[i]);
