@@ -12,29 +12,24 @@ public class Punishment {
 	private final UUID operator;
 	
 	private final Date startDate;
-	private final long duration;
+	private final Date endDate;
 	private final String reason;
 	private final int id;
 	
-	public Punishment(PunishmentType type, UUID playerUUID, String playerName, UUID operator, Date startDate, long duration, String reason, int id) {
+	public Punishment(PunishmentType type, UUID playerUUID, String playerName, UUID operator, Date startDate, Date endDate, long duration, String reason, int id) {
 		this.type = type;
 		this.playerUUID = playerUUID;
 		this.playerName = playerName;
 		this.operator = operator;
 		this.startDate = startDate;
-		this.duration = duration;
+		this.endDate = endDate;
 		this.reason = reason;
 		this.id = id;
-	}
-
-	public Date getExpirationDate() {
-		return new Date(startDate.getTime() + duration);
 	}
 	
 	public boolean isExpired() {
 		final Date now = new Date();
-		
-		return getExpirationDate().getTime() - now.getTime() < 0;
+		return getEndDate().getTime() - now.getTime() < 0;
 	}
 
 	/* 
@@ -68,9 +63,9 @@ public class Punishment {
 	public Date getStartDate() {
 		return startDate;
 	}
-	
-	public long getDuration() {
-		return duration;
+
+	public Date getEndDate() {
+		return endDate;
 	}
 	
 }
