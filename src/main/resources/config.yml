@@ -1,0 +1,6 @@
+mysql:
+  ip: localhost
+  database: minty
+  user: admin
+  password: ""
+  port: 3306
