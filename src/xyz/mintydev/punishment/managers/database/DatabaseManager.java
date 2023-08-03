@@ -44,7 +44,8 @@ public class DatabaseManager {
 		}
 		
 		/* Create the default tables in the DB */
-		
+		executeStatement(SQLQuery.CREATE_TABLE_PUNISHMENT);
+		executeStatement(SQLQuery.CREATE_TABLE_EXPIRED);
 	}
 	
     /**
