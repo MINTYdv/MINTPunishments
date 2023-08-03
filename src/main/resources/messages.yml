@@ -1,0 +1,6 @@
+layouts:
+  banned:
+    - ''
+    - '&c&lYou are currently banned from the server !'
+    - '&7Appeal at : &fwww.appeal.myserver.com'
+    - ''

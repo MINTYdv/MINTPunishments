@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import org.bukkit.Bukkit;
+
 public class PlayerProfile {
 
 	private final UUID uuid;
@@ -13,10 +15,14 @@ public class PlayerProfile {
 		this.uuid = uuid;
 	}
 
+	public boolean isOnline() {
+		return Bukkit.getPlayer(uuid) != null;
+	}
+	
 	/* 
 	 * Getters & Setters
 	 * */
-	
+
 	public UUID getUuid() {
 		return uuid;
 	}

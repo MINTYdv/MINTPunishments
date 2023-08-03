@@ -2,9 +2,11 @@ package xyz.mintydev.punishment;
 
 import org.bukkit.plugin.java.JavaPlugin;
 
+import xyz.mintydev.punishment.listeners.DataListener;
 import xyz.mintydev.punishment.managers.ConfigManager;
 import xyz.mintydev.punishment.managers.LangManager;
 import xyz.mintydev.punishment.managers.ProfileManager;
+import xyz.mintydev.punishment.managers.PunishmentManager;
 import xyz.mintydev.punishment.managers.database.DatabaseManager;
 
 public class MINTPunishment extends JavaPlugin {
@@ -15,6 +17,7 @@ public class MINTPunishment extends JavaPlugin {
 	private LangManager langManager;
 	private DatabaseManager databaseManager;
 	private ConfigManager configManager;
+	private PunishmentManager punishmentManager;
 	
 	@Override
 	public void onEnable() {
@@ -29,7 +32,7 @@ public class MINTPunishment extends JavaPlugin {
 	}
 	
 	private void registerListeners() {
-		
+		getServer().getPluginManager().registerEvents(new DataListener(instance), instance);
 	}
 
 	private void registerCommands() {
@@ -42,6 +45,7 @@ public class MINTPunishment extends JavaPlugin {
 		profileManager = new ProfileManager(instance);
 		langManager = new LangManager(instance);
 		databaseManager = new DatabaseManager(instance);
+		punishmentManager = new PunishmentManager(instance);
 	}
 
 	@Override
