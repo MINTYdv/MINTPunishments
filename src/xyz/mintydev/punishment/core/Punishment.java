@@ -16,7 +16,7 @@ public class Punishment {
 	private final String reason;
 	private final int id;
 	
-	public Punishment(PunishmentType type, UUID playerUUID, String playerName, UUID operator, Date startDate, Date endDate, long duration, String reason, int id) {
+	public Punishment(PunishmentType type, UUID playerUUID, String playerName, UUID operator, Date startDate, Date endDate, String reason, int id) {
 		this.type = type;
 		this.playerUUID = playerUUID;
 		this.playerName = playerName;

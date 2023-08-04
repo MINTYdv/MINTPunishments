@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Date;
+import java.util.UUID;
 import java.util.logging.Level;
 
 import javax.sql.rowset.CachedRowSet;
@@ -13,6 +15,8 @@ import javax.sql.rowset.RowSetProvider;
 import com.zaxxer.hikari.HikariDataSource;
 
 import xyz.mintydev.punishment.MINTPunishment;
+import xyz.mintydev.punishment.core.Punishment;
+import xyz.mintydev.punishment.core.PunishmentType;
 
 public class DatabaseManager {
 	
@@ -93,6 +97,25 @@ public class DatabaseManager {
         }
         return null;
     }
+	
+    /**
+     * Get a Punishment from a {@link ResultSet}
+     *
+     * @param rs the result set
+     * @return the punishment from the result set
+     * @throws SQLException the sql exception
+     */
+    public Punishment getPunishmentFromResultSet(ResultSet rs) throws SQLException {
+        return new Punishment(PunishmentType.valueOf(rs.getString("type")),
+        		UUID.fromString(rs.getString("uuid")),
+        		rs.getString("name"),
+        		UUID.fromString(rs.getString("operator")),
+        		new Date(rs.getLong("start")),
+        		new Date(rs.getLong("end")),
+        		rs.getString("reason"),
+        		rs.getInt("id"));
+    }
+	
 	
     private CachedRowSet createCachedRowSet() throws SQLException {
     	if (rowSetFactory == null) {
