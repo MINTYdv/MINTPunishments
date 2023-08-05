@@ -2,28 +2,31 @@ package xyz.mintydev.punishment.core;
 
 public enum PunishmentType {
 
-	BAN("Ban", null, false, "mintpunishment.ban.perma"),
-	TEMP_BAN("Tempban", BAN, false, "mintpunishment.ban.temp"),
-	MUTE("Mute", null, false, "mintpunishment.mute.perm"),
-	TEMP_MUTE("Tempmute", MUTE, false, "mintpunishment.mute.temp"),
-	WARNING("Warn", null, false, "mintpunishment.warn"),
-	KICK("Kick", null, false, "mintpunishment.kick");
+	BAN("Ban", null, false, "mintpunishment.ban.perma", "broadcast.ban"),
+	TEMP_BAN("Tempban", BAN, false, "mintpunishment.ban.temp", "broadcast.temp-ban"),
+	MUTE("Mute", null, false, "mintpunishment.mute.perm", "broadcast.mute"),
+	TEMP_MUTE("Tempmute", MUTE, false, "mintpunishment.mute.temp", "broadcast.temp-mute"),
+	KICK("Kick", null, false, "mintpunishment.kick", "broadcast.kick");
 	
-	private final String name;
+	private final String name, perms, broadcast;
 	private final PunishmentType base;
 	private final boolean temporary;
-	private final String perms;
 	
-	PunishmentType(String name, PunishmentType base, boolean temporary, String perms){
+	PunishmentType(String name, PunishmentType base, boolean temporary, String perms, String broadcast){
 		this.name = name;
 		this.base = base;
 		this.temporary = temporary;
 		this.perms = perms;
+		this.broadcast = broadcast;
 	}
 
 	/*
 	 * Getters & Setters
 	 * */
+	
+	public String getBroadcast() {
+		return broadcast;
+	}
 	
 	public String getName() {
 		return name;

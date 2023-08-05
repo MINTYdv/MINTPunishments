@@ -22,6 +22,52 @@ layouts:
     - '&7Appeal at : &fwww.appeal.myserver.com'
     - '&8BAN ID : #%id%'
     - ''
+broadcast:
+  ban:
+    reason:
+      - ""
+      - "&c&lMINTPunishments &f» &c%player% &fhas been &cpermanently banned &fby &c%operator% &ffor &c%reason%&f."
+      - ""
+    no-reason:
+      - ""
+      - "&c&lMINTPunishments &f» &c%player% &fhas been &cpermanently banned &fby &c%operator%&f."
+      - ""
+  temp-ban:
+    reason:
+      - ""
+      - "&c&lMINTPunishments &f» &c%player% &fhas been &cbanned &ffor &c%duration% &fby &c%operator% &ffor &c%reason%&f."
+      - ""
+    no-reason:
+      - ""
+      - "&c&lMINTPunishments &f» &c%player% &fhas been &cbanned &ffor &c%duration% &fby &c%operator%&f."
+      - ""
+  kick:
+    reason:
+      - ""
+      - "&c&lMINTPunishments &f» &c%player% &fhas been &ckicked &fby &c%operator% &ffor &c%reason%&f."
+      - ""
+    no-reason:
+      - ""
+      - "&c&lMINTPunishments &f» &c%player% &fhas been &ckicked &fby &c%operator%&f."
+      - ""
+  mute:
+    reason:
+      - ""
+      - "&c&lMINTPunishments &f» &c%player% &fhas been &cmuted &fby &c%operator% &ffor &c%reason%&f."
+      - ""
+    no-reason:
+      - ""
+      - "&c&lMINTPunishments &f» &c%player% &fhas been &cmuted &fby &c%operator%&f."
+      - ""
+  temp-mute:
+    reason:
+      - ""
+      - "&c&lMINTPunishments &f» &c%player% &fhas been &cmuted &ffor &c%time% &fby &c%operator% &ffor &c%reason%&f."
+      - ""
+    no-reason:
+      - ""
+      - "&c&lMINTPunishments &f» &c%player% &fhas been &cmuted &ffor &c%time% &fby &c%operator%&f."
+      - ""
 errors:
   reason-too-long: "&cThe ban reason is too long. (The limit is 255 characters)"
 time-units:
