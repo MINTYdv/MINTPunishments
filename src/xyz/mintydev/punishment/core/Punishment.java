@@ -25,7 +25,7 @@ public class Punishment {
 	
 	private final Date startDate;
 	private final Date endDate;
-	private final String reason;
+	private String reason;
 	private int id;
 	
 	public Punishment(PunishmentType type, UUID playerUUID, String playerName, UUID operator, String operatorName, Date startDate, Date endDate, String reason) {
@@ -53,6 +53,11 @@ public class Punishment {
 	}
 	
     public void execute(boolean silent) {
+    	/* Set default reason */
+    	if(reason.length() == 0) {
+    		reason = LangManager.getMessage("default-reason");
+    	}
+    	
     	/* Add the punishment to the player history */
     	DatabaseManager.get().executeStatement(SQLQuery.INSERT_PUNISHMENT, type.name(), getPlayerUUID().toString(), getPlayerName(), getOperator().toString(), getOperatorName(), getStartDate().getTime(), getEndDate() != null ? getEndDate().getTime() : null, reason);
     	
@@ -80,6 +85,28 @@ public class Punishment {
     		}
     	}
     	PunishmentManager.get().getHistoryPunishments().add(this);
+    
+    	/* Broadcast */
+    	if(!silent) {
+    		for(String str : LangManager.getMessageList(this.type.getBroadcast())) {
+    			str = replaceWithValues(str);
+    			Bukkit.broadcastMessage(str);
+    		}
+    	}
+    }
+    
+    private String replaceWithValues(final String str) {
+    	String res = str;
+    	res = res.replaceAll("%reason%", this.reason);
+    	res = res.replaceAll("%operator%", this.operatorName);
+    	res = res.replaceAll("%player%", this.playerName);
+    	res = res.replaceAll("%start_date%", CalendarUtil.getFormatted(this.startDate));
+		res = res.replaceAll("%id%", (id > 0 ? id+"" : "N/A"));
+		
+		if(this.type == PunishmentType.TEMP_BAN) {
+			res = res.replaceAll("%end_date%", CalendarUtil.getFormatted(this.endDate));
+		}
+		return res;
     }
     
     public String getKickLayout() {
@@ -87,15 +114,7 @@ public class Punishment {
     	
     	String res = "";
     	for(String str : base) {
-    		str = str.replaceAll("%reason%", this.reason);
-    		str = str.replaceAll("%operator%", this.operatorName);
-    		str = str.replaceAll("%player%", this.playerName);
-    		str = str.replaceAll("%start_date%", CalendarUtil.getFormatted(this.startDate));
-    		str = str.replaceAll("%id%", (id > 0 ? id+"" : "N/A"));
-    		
-    		if(this.type == PunishmentType.TEMP_BAN) {
-        		str = str.replaceAll("%end_date%", CalendarUtil.getFormatted(this.endDate));
-    		}
+    		str = replaceWithValues(str);
     		res += str + "\n";
     	}
     	return res;
