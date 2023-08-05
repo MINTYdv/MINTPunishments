@@ -41,7 +41,7 @@ public class PlayerProfile {
     
     public Punishment getBan() {
         for (final Punishment pt : punishments) {
-            if (pt.getType().getBase() == PunishmentType.BAN && !pt.isExpired()) {
+            if (pt.getType() == PunishmentType.BAN || pt.getType().getBase() == PunishmentType.BAN && !pt.isExpired()) {
                 return pt;
             }
         }

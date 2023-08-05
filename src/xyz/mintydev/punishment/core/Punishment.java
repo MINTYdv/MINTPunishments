@@ -6,7 +6,10 @@ import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
+import org.bukkit.Bukkit;
+
 import xyz.mintydev.punishment.managers.LangManager;
+import xyz.mintydev.punishment.managers.PunishmentManager;
 import xyz.mintydev.punishment.managers.database.DatabaseManager;
 import xyz.mintydev.punishment.managers.database.SQLQuery;
 import xyz.mintydev.punishment.util.CalendarUtil;
@@ -51,10 +54,10 @@ public class Punishment {
 	
     public void execute(boolean silent) {
     	/* Add the punishment to the player history */
-    	DatabaseManager.get().executeStatement(SQLQuery.INSERT_PUNISHMENT, type.name(), getPlayerUUID().toString(), getPlayerName(), getOperator().toString(), getOperatorName(), getStartDate().getTime(), getEndDate().getTime(), reason);
+    	DatabaseManager.get().executeStatement(SQLQuery.INSERT_PUNISHMENT, type.name(), getPlayerUUID().toString(), getPlayerName(), getOperator().toString(), getOperatorName(), getStartDate().getTime(), getEndDate() != null ? getEndDate().getTime() : null, reason);
     	
     	if(type != PunishmentType.KICK) {
-    		DatabaseManager.get().executeStatement(SQLQuery.INSERT_PUNISHMENT_HISTORY, type.name(), getPlayerUUID().toString(), getPlayerName(), getOperator().toString(), getOperatorName(), getStartDate().getTime(), getEndDate().getTime(), reason);
+    		DatabaseManager.get().executeStatement(SQLQuery.INSERT_PUNISHMENT_HISTORY, type.name(), getPlayerUUID().toString(), getPlayerName(), getOperator().toString(), getOperatorName(), getStartDate().getTime(), getEndDate() != null ? getEndDate().getTime() : null, reason);
     		
     		// Retrieve id
     		try(ResultSet rs = DatabaseManager.get().executeResultStatement(SQLQuery.SELECT_EXACT_PUNISHMENT, getPlayerUUID().toString(), getStartDate().getTime(), getType().name())) {
@@ -65,6 +68,18 @@ public class Punishment {
 				e.printStackTrace();
 			}
     	}
+    	
+    	/* Add the punishment to the cache */
+    	// Check if player is online
+    	if(Bukkit.getPlayer(this.playerUUID) != null && Bukkit.getPlayer(this.playerUUID).isOnline()) {
+    		PunishmentManager.get().getLoadedPunishments().add(this);
+    		
+    		// kick player if online & ban/tempban
+    		if(this.type == PunishmentType.BAN || this.type.getBase() == PunishmentType.BAN) {
+    			Bukkit.getPlayer(playerName).kickPlayer(this.getKickLayout());
+    		}
+    	}
+    	PunishmentManager.get().getHistoryPunishments().add(this);
     }
     
     public String getKickLayout() {
@@ -81,6 +96,7 @@ public class Punishment {
     		if(this.type == PunishmentType.TEMP_BAN) {
         		str = str.replaceAll("%end_date%", CalendarUtil.getFormatted(this.endDate));
     		}
+    		res += str + "\n";
     	}
     	return res;
     }

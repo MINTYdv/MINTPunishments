@@ -31,7 +31,7 @@ public class ConfigManager {
 	}
 	
 	public String getDateFormat() {
-		if(main.getConfig().getString("date-format") == null || main.getConfig().getString("date-format").length() > 0) return "dd/MM/yyyy HH:mm:ss";
+		if(main.getConfig().getString("date-format") == null || main.getConfig().getString("date-format").length() > 0) return "dd/MM/yyyy HH:mm";
 		return main.getConfig().getString("date-format");
 	}
 	
