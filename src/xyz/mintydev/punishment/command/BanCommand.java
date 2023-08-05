@@ -1,8 +1,8 @@
 package xyz.mintydev.punishment.command;
 
 import java.util.Date;
+import java.util.UUID;
 
-import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -13,6 +13,7 @@ import xyz.mintydev.punishment.core.PunishmentType;
 import xyz.mintydev.punishment.managers.LangManager;
 import xyz.mintydev.punishment.util.CalendarUtil;
 import xyz.mintydev.punishment.util.TimeUnit;
+import xyz.mintydev.punishment.util.UUIDFetcher;
 
 public class BanCommand implements CommandExecutor {
 
@@ -64,8 +65,10 @@ public class BanCommand implements CommandExecutor {
 		final boolean isPlayer = sender instanceof Player;
 		final Date now = new Date();
 		
+		final UUID playerUUID = UUIDFetcher.getUUID(playerName);
+		
 		Punishment pt = new Punishment((totalDuration > 0 ? PunishmentType.TEMP_BAN : PunishmentType.BAN),
-				Bukkit.getPlayer(playerName).getUniqueId(),
+				playerUUID,
 				playerName,
 				isPlayer ? ((Player)sender).getUniqueId() : null,
 				sender.getName(),
