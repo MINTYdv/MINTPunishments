@@ -50,6 +50,7 @@ public class DatabaseManager {
 		/* Create the default tables in the DB */
 		executeStatement(SQLQuery.CREATE_TABLE_ACTIVE);
 		executeStatement(SQLQuery.CREATE_TABLE_EXPIRED);
+		executeStatement(SQLQuery.DELETE_OLD_PUNISHMENTS, new Date().getTime());
 	}
 	
 	/** 
@@ -121,7 +122,7 @@ public class DatabaseManager {
         return new Punishment(PunishmentType.valueOf(rs.getString("type")),
         		UUID.fromString(rs.getString("uuid")),
         		rs.getString("name"),
-        		UUID.fromString(rs.getString("operator")),
+        		rs.getString("operator") != null ? UUID.fromString(rs.getString("operator")) : null,
         		rs.getString("operatorName"),
         		new Date(rs.getLong("start")),
         		new Date(rs.getLong("end")),

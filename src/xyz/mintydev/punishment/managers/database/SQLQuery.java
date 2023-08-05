@@ -43,7 +43,8 @@ public enum SQLQuery {
 	SELECT_USER_PUNISHMENTS_HISTORY_UUID("SELECT * FROM `mp_expired` WHERE `uuid` = ?"),
 	SELECT_ALL_PUNISHMENTS("SELECT * FROM `mp_active`"),
 	DELETE_PUNISHMENT("DELETE FROM `mp_active` WHERE `id` = ?"),
-	SELECT_PUNISHMENTS_ID("SELECT * FROM `mp_active` WHERE `id` = ?");
+	SELECT_PUNISHMENTS_ID("SELECT * FROM `mp_active` WHERE `id` = ?"),
+	DELETE_OLD_PUNISHMENTS("DELETE FROM `mp_active` WHERE `end` <= ?");
 	
 	private final String mySqlQuery;
 	
