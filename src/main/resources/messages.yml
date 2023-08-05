@@ -22,6 +22,8 @@ layouts:
     - '&7Appeal at : &fwww.appeal.myserver.com'
     - '&8BAN ID : #%id%'
     - ''
+errors:
+  reason-too-long: "&cThe ban reason is too long. (The limit is 255 characters)"
 time-units:
   years: "years"
   year: "year"

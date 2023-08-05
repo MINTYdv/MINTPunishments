@@ -4,6 +4,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 import java.util.UUID;
@@ -121,6 +122,27 @@ public class PunishmentManager {
 		}
 		
 		return res;
+	}
+	
+	public void removeCache(String name, UUID uuid) {
+		if(this.cachedData.contains(name)) cachedData.remove(name);
+		if(this.cachedData.contains(uuid.toString())) cachedData.remove(uuid.toString());
+		
+        Iterator<Punishment> iterator = punishments.iterator();
+        while (iterator.hasNext()) {
+            Punishment punishment = iterator.next();
+            if (punishment.getPlayerUUID().equals(uuid)) {
+                iterator.remove();
+            }
+        }
+
+        iterator = historyPunishments.iterator();
+        while (iterator.hasNext()) {
+            Punishment punishment = iterator.next();
+            if (punishment.getPlayerUUID().equals(uuid)) {
+                iterator.remove();
+            }
+        }
 	}
 	
 	public boolean isCached(String UUID) {

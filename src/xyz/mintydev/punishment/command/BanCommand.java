@@ -10,7 +10,9 @@ import org.bukkit.entity.Player;
 
 import xyz.mintydev.punishment.core.Punishment;
 import xyz.mintydev.punishment.core.PunishmentType;
+import xyz.mintydev.punishment.managers.LangManager;
 import xyz.mintydev.punishment.util.CalendarUtil;
+import xyz.mintydev.punishment.util.TimeUnit;
 
 public class BanCommand implements CommandExecutor {
 
@@ -32,8 +34,11 @@ public class BanCommand implements CommandExecutor {
 		
 		// Check if tempban
 		long totalDuration = -1;
-		if(args.length > 1 && CalendarUtil.convertTextToMS(args[1]) > 0) {
-			totalDuration = CalendarUtil.convertTextToMS(args[1]);
+		if(args.length > 1) {
+			final TimeUnit unit = CalendarUtil.getUnit(args[1]);
+			if(unit != null) {
+				totalDuration = CalendarUtil.getNumberfromUnit(args[1], unit);
+			}
 		}
 		
 		// Get reason
@@ -51,6 +56,11 @@ public class BanCommand implements CommandExecutor {
 			reason += arg + " ";
 		}
 		
+		if(reason.length() >= 255) {
+			sender.sendMessage(LangManager.getMessage("errors.reason-too-long"));
+			return false;
+		}
+		
 		final boolean isPlayer = sender instanceof Player;
 		final Date now = new Date();
 		
@@ -64,7 +74,7 @@ public class BanCommand implements CommandExecutor {
 				reason);
 	
 		pt.execute(silent);
-		sender.sendMessage("§aBan correctement appliqué !");
+		sender.sendMessage("§aBan successfully applied.");
 		return true;
 	}
 	

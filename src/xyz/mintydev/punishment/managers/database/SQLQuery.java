@@ -5,11 +5,11 @@ public enum SQLQuery {
 	CREATE_TABLE_ACTIVE(
         "CREATE TABLE IF NOT EXISTS `mp_active` ("+
 		"`id` int NOT NULL AUTO_INCREMENT," +
-        "`type` VARCHAR(16) NULL DEFAULT NULL," +
-        "`uuid` VARCHAR(35) NULL DEFAULT NULL," +
-        "`name` VARCHAR(16) NULL DEFAULT NULL," +
-        "`operator` VARCHAR(32) NULL DEFAULT NULL," +
-        "`operatorName` VARCHAR(32) NULL DEFAULT NULL," +
+        "`type` VARCHAR(255) NULL DEFAULT NULL," +
+        "`uuid` VARCHAR(255) NULL DEFAULT NULL," +
+        "`name` VARCHAR(255) NULL DEFAULT NULL," +
+        "`operator` VARCHAR(255) NULL DEFAULT NULL," +
+        "`operatorName` VARCHAR(255) NULL DEFAULT NULL," +
         "`start` BIGINT DEFAULT NULL," +
         "`end` BIGINT DEFAULT NULL," +
         "`reason` VARCHAR(255) NULL DEFAULT NULL," +
@@ -18,11 +18,11 @@ public enum SQLQuery {
 	CREATE_TABLE_EXPIRED(
         "CREATE TABLE IF NOT EXISTS `mp_expired` ("+
 		"`id` int NOT NULL AUTO_INCREMENT," +
-        "`type` VARCHAR(16) NULL DEFAULT NULL," +
-        "`uuid` VARCHAR(35) NULL DEFAULT NULL," +
-        "`name` VARCHAR(16) NULL DEFAULT NULL," +
-        "`operator` VARCHAR(16) NULL DEFAULT NULL," +
-        "`operatorName` VARCHAR(32) NULL DEFAULT NULL," +
+        "`type` VARCHAR(255) NULL DEFAULT NULL," +
+        "`uuid` VARCHAR(255) NULL DEFAULT NULL," +
+        "`name` VARCHAR(255) NULL DEFAULT NULL," +
+        "`operator` VARCHAR(255) NULL DEFAULT NULL," +
+        "`operatorName` VARCHAR(255) NULL DEFAULT NULL," +
         "`start` BIGINT DEFAULT NULL," +
         "`end` BIGINT DEFAULT NULL," +
         "`reason` VARCHAR(255) NULL DEFAULT NULL," +

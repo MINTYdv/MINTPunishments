@@ -29,4 +29,32 @@ public class CalendarUtil {
         return temporalAccessor.getLong(null);
 	}
 	
+    public static TimeUnit getUnit(String s) {
+        if(s.toLowerCase().indexOf("y")==s.length()-1){return TimeUnit.YEAR;}
+        if(s.toLowerCase().indexOf("mm")==s.length()-1){return TimeUnit.MONTH;}
+        if(s.toLowerCase().indexOf("d")==s.length()-1){return TimeUnit.DAY;}
+        if(s.toLowerCase().indexOf("h")==s.length()-1){return TimeUnit.HOUR;}
+        if(s.toLowerCase().indexOf("m")==s.length()-1){return TimeUnit.MINUTE;}
+        if(s.toLowerCase().indexOf("s")==s.length()-1){return TimeUnit.SECOND;}
+        return null;
+    }
+    
+    public static long getNumberfromUnit(String s, TimeUnit unit){
+        switch (unit){
+        	case YEAR:
+            	return Integer.parseInt(s.toLowerCase().replaceAll("y",""))*TimeUnit.YEAR.getMilliseconds();
+        	case MONTH:
+        		return Integer.parseInt(s.toLowerCase().replaceAll("mm",""))*TimeUnit.MONTH.getMilliseconds();
+            case DAY:
+                return Integer.parseInt(s.toLowerCase().replaceAll("d",""))*TimeUnit.DAY.getMilliseconds();
+            case HOUR:
+                return Integer.parseInt(s.toLowerCase().replaceAll("h",""))*TimeUnit.HOUR.getMilliseconds();
+            case MINUTE:
+                return Integer.parseInt(s.toLowerCase().replaceAll("m",""))*TimeUnit.MINUTE.getMilliseconds();
+            case SECOND:
+                return Integer.parseInt(s.toLowerCase().replaceAll("s",""))*TimeUnit.SECOND.getMilliseconds();
+        }
+        return 0;
+    }
+	
 }

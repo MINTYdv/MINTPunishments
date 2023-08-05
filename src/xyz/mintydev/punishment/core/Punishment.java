@@ -51,7 +51,7 @@ public class Punishment {
 	
     public void execute(boolean silent) {
     	/* Add the punishment to the player history */
-    	DatabaseManager.get().executeStatement(SQLQuery.INSERT_PUNISHMENT_HISTORY, type.name(), getPlayerUUID().toString(), getPlayerName(), getOperator().toString(), getOperatorName(), getStartDate().getTime(), getEndDate().getTime(), reason);
+    	DatabaseManager.get().executeStatement(SQLQuery.INSERT_PUNISHMENT, type.name(), getPlayerUUID().toString(), getPlayerName(), getOperator().toString(), getOperatorName(), getStartDate().getTime(), getEndDate().getTime(), reason);
     	
     	if(type != PunishmentType.KICK) {
     		DatabaseManager.get().executeStatement(SQLQuery.INSERT_PUNISHMENT_HISTORY, type.name(), getPlayerUUID().toString(), getPlayerName(), getOperator().toString(), getOperatorName(), getStartDate().getTime(), getEndDate().getTime(), reason);

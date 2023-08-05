@@ -1,9 +1,11 @@
 package xyz.mintydev.punishment.listeners;
 
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerPreLoginEvent;
+import org.bukkit.event.player.PlayerQuitEvent;
 
 import xyz.mintydev.punishment.MINTPunishment;
 import xyz.mintydev.punishment.managers.PunishmentManager;
@@ -26,6 +28,15 @@ public class DataListener implements Listener {
         		return;
         	}
         }
+    }
+    
+    @EventHandler
+    public void onQuit(PlayerQuitEvent e) {
+    	final Player player = e.getPlayer();
+    	
+    	if(!PunishmentManager.get().isCached(player.getUniqueId().toString())) return;
+    	
+    	PunishmentManager.get().removeCache(player.getName(), player.getUniqueId());
     }
 	
 }
