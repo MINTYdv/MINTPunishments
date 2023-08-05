@@ -22,3 +22,16 @@ layouts:
     - '&7Appeal at : &fwww.appeal.myserver.com'
     - '&8BAN ID : #%id%'
     - ''
+time-units:
+  years: "years"
+  year: "year"
+  months: "months"
+  month: "month"
+  days: "days"
+  day: "day"
+  hours: "hours"
+  hour: "hour"
+  minutes: "minutes"
+  minute: "minute"
+  seconds: "seconds"
+  second: "second"

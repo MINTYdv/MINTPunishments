@@ -2,3 +2,7 @@ name: MINTPunishment
 author: MINTY
 version: 1.0.0
 main: xyz.mintydev.punishment.MINTPunishment
+commands:
+  ban:
+    aliases: tempban, tban
+    description: ban command

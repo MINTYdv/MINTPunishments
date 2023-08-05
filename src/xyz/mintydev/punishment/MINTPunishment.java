@@ -2,6 +2,7 @@ package xyz.mintydev.punishment;
 
 import org.bukkit.plugin.java.JavaPlugin;
 
+import xyz.mintydev.punishment.command.BanCommand;
 import xyz.mintydev.punishment.listeners.DataListener;
 import xyz.mintydev.punishment.managers.ConfigManager;
 import xyz.mintydev.punishment.managers.LangManager;
@@ -34,7 +35,7 @@ public class MINTPunishment extends JavaPlugin {
 	}
 
 	private void registerCommands() {
-		
+		this.getCommand("ban").setExecutor(new BanCommand());
 	}
 
 	private void registerManagers() {

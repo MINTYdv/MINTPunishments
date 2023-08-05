@@ -28,18 +28,4 @@ public class DataListener implements Listener {
         }
     }
 	
-//	@EventHandler
-//	public void onJoin(PlayerJoinEvent e) {
-//		// Load player profile
-//		final Player player = e.getPlayer();
-//		main.getProfileManager().getProfile(player.getUniqueId());
-//		
-//		List<Punishment> punishments = PunishmentManager.get().getPunishments(player.getUniqueId(), null, true);
-//		System.out.println("Psize : " + punishments.size());
-//		for(Punishment p : punishments) {
-//			System.out.println(p.getPlayerName());
-//			System.out.println(p.getId() + " - " + p.getType().toString());
-//		}
-//	}
-	
 }
