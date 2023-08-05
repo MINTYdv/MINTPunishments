@@ -77,12 +77,17 @@ public class DatabaseManager {
 		return executeStatement(query, true, parameters);
 	}
 	
+	public void insertPunishment() {
+		
+	}
+	
 	private synchronized ResultSet executeStatement(String sql, boolean result, Object... parameters) {
 		try (Connection connection = dataSource.getConnection(); PreparedStatement statement = connection.prepareStatement(sql)) {
 
     		for (int i = 0; i < parameters.length; i++) {
     			statement.setObject(i + 1, parameters[i]);
     		}
+    		System.out.println(statement.toString());
 
     		if (result) {
     			CachedRowSet results = createCachedRowSet();
@@ -110,10 +115,10 @@ public class DatabaseManager {
         		UUID.fromString(rs.getString("uuid")),
         		rs.getString("name"),
         		UUID.fromString(rs.getString("operator")),
+        		rs.getString("operatorName"),
         		new Date(rs.getLong("start")),
         		new Date(rs.getLong("end")),
-        		rs.getString("reason"),
-        		rs.getInt("id"));
+        		rs.getString("reason"));
     }
 	
 	

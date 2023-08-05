@@ -8,7 +8,8 @@ public enum SQLQuery {
         "`type` VARCHAR(16) NULL DEFAULT NULL," +
         "`uuid` VARCHAR(35) NULL DEFAULT NULL," +
         "`name` VARCHAR(16) NULL DEFAULT NULL," +
-        "`operator` VARCHAR(16) NULL DEFAULT NULL," +
+        "`operator` VARCHAR(32) NULL DEFAULT NULL," +
+        "`operatorName` VARCHAR(32) NULL DEFAULT NULL," +
         "`start` BIGINT DEFAULT NULL," +
         "`end` BIGINT DEFAULT NULL," +
         "`reason` VARCHAR(255) NULL DEFAULT NULL," +
@@ -21,12 +22,24 @@ public enum SQLQuery {
         "`uuid` VARCHAR(35) NULL DEFAULT NULL," +
         "`name` VARCHAR(16) NULL DEFAULT NULL," +
         "`operator` VARCHAR(16) NULL DEFAULT NULL," +
+        "`operatorName` VARCHAR(32) NULL DEFAULT NULL," +
         "`start` BIGINT DEFAULT NULL," +
         "`end` BIGINT DEFAULT NULL," +
         "`reason` VARCHAR(255) NULL DEFAULT NULL," +
         "PRIMARY KEY (`id`))"
 	),
+    INSERT_PUNISHMENT(
+            "INSERT INTO `mp_active` " +
+                    "(`type`, `uuid`, `name`, `operator`, `operatorName`, `start`, `end`, `reason`) " +
+            "VALUES (?, ?, ?, ?, ?, ?, ?, ?)"
+    ),
+    INSERT_PUNISHMENT_HISTORY(
+            "INSERT INTO `mp_expired` " +
+            "(`type`, `uuid`, `name`, `operator`, `operatorName`, `start`, `end`, `reason`) " +
+            "VALUES (?, ?, ?, ?, ?, ?, ?, ?)"
+    ),
 	SELECT_USER_PUNISHMENTS_UUID("SELECT * FROM `mp_active` WHERE `uuid` = ?"),
+	SELECT_EXACT_PUNISHMENT("SELECT * FROM `mp_active` WHERE `uuid` = ? AND `start` = ? AND `type` = ?"),
 	SELECT_USER_PUNISHMENTS_HISTORY_UUID("SELECT * FROM `mp_expired` WHERE `uuid` = ?"),
 	SELECT_ALL_PUNISHMENTS("SELECT * FROM `mp_active`"),
 	DELETE_PUNISHMENT("DELETE FROM `mp_active` WHERE `id` = ?"),

@@ -30,6 +30,11 @@ public class ConfigManager {
 		return new DatabaseCredentials(ip, database, user, password, port);
 	}
 	
+	public String getDateFormat() {
+		if(main.getConfig().getString("date-format") == null || main.getConfig().getString("date-format").length() > 0) return "dd/MM/yyyy HH:mm:ss";
+		return main.getConfig().getString("date-format");
+	}
+	
 	/* 
 	 * Getters & Setters
 	 * */
