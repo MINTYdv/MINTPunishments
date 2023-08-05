@@ -52,6 +52,13 @@ public class DatabaseManager {
 		executeStatement(SQLQuery.CREATE_TABLE_EXPIRED);
 	}
 	
+	/** 
+	 * Shutdown the database connection
+	 * */
+	public void shutdown() {
+		dataSource.close();
+	}
+	
     /**
      * Execute a sql statement without having to obtain any results.
      *

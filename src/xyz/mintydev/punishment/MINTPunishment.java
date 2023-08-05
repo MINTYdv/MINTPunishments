@@ -48,6 +48,8 @@ public class MINTPunishment extends JavaPlugin {
 
 	@Override
 	public void onDisable() {
+		DatabaseManager.get().shutdown();
+		
 		getLogger().info("Plugin disabled. Thanks for choosing MINTPunishment !");
 	}
 	
