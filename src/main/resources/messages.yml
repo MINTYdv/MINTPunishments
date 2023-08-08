@@ -22,28 +22,55 @@ layouts:
     - '&7Appeal at : &fwww.appeal.myserver.com'
     - '&8BAN ID : #%id%'
     - ''
-default-reason: "No reason specified."
-broadcast:
-  ban:
-    - ""
-    - "&c&lMINTPunishments &f» &c%player% &fhas been &cpermanently banned &fby &c%operator% &ffor &c%reason%&f."
-    - ""
-  temp-ban:
-    - ""
-    - "&c&lMINTPunishments &f» &c%player% &fhas been &cbanned &ffor &c%duration% &fby &c%operator% &ffor &c%reason%&f."
-    - ""
-  kick:
-    - ""
-    - "&c&lMINTPunishments &f» &c%player% &fhas been &ckicked &fby &c%operator% &ffor &c%reason%&f."
-    - ""
   mute:
-    - ""
-    - "&c&lMINTPunishments &f» &c%player% &fhas been &cmuted &fby &c%operator% &ffor &c%reason%&f."
-    - ""
+    - ''
+    - '&cYou are currently permanently muted from the chat.'
+    - '&cOperator: &4%operator%'
+    - '&cReason: &4%reason%'
+    - ''
+    - '&7Appeal at : &fwww.appeal.myserver.com'
+    - ''
   temp-mute:
-    - ""
-    - "&c&lMINTPunishments &f» &c%player% &fhas been &cmuted &ffor &c%time% &fby &c%operator% &ffor &c%reason%&f."
-    - ""
+    - ''
+    - '&cYou are currently muted from the chat.'
+    - '&cOperator: &4%operator%'
+    - '&cReason: &4%reason%'
+    - '&cTime left: &4%timeleft%'
+    - ''
+    - '&7Appeal at : &fwww.appeal.myserver.com'
+    - ''
+default-reason: "No reason specified."
+punishments:
+  ban:
+    apply-message: "&a%player% has successfully been permanently banned for %reason%."
+    broadcast:
+      - ""
+      - "&c&lMINTPunishments &f» &c%player% &fhas been &cpermanently banned &fby &c%operator% &ffor &c%reason%&f."
+      - ""
+  temp-ban:
+    apply-message: "&a%player% has successfully been temp-banned for %reason%."
+    broadcast:
+      - ""
+      - "&c&lMINTPunishments &f» &c%player% &fhas been &cbanned &ffor &c%duration% &fby &c%operator% &ffor &c%reason%&f."
+      - ""
+  kick:
+    apply-message: "&a%player% has successfully been kicked from the server for %reason%."
+    broadcast:
+      - ""
+      - "&c&lMINTPunishments &f» &c%player% &fhas been &ckicked &fby &c%operator% &ffor &c%reason%&f."
+      - ""
+  mute:
+    apply-message: "&a%player% has successfully been permanently muted for %reason%."
+    broadcast:
+      - ""
+      - "&c&lMINTPunishments &f» &c%player% &fhas been &cmuted &fby &c%operator% &ffor &c%reason%&f."
+      - ""
+  temp-mute:
+    apply-message: "&a%player% has successfully been temp-muted for %reason%."
+    broadcast:
+      - ""
+      - "&c&lMINTPunishments &f» &c%player% &fhas been &cmuted &ffor &c%time% &fby &c%operator% &ffor &c%reason%&f."
+      - ""
 errors:
   reason-too-long: "&cThe ban reason is too long. (The limit is 255 characters)"
 time-units:

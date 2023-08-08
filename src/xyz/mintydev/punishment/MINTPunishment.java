@@ -2,7 +2,9 @@ package xyz.mintydev.punishment;
 
 import org.bukkit.plugin.java.JavaPlugin;
 
-import xyz.mintydev.punishment.command.BanCommand;
+import xyz.mintydev.punishment.command.PunishmentCommand;
+import xyz.mintydev.punishment.core.PunishmentType;
+import xyz.mintydev.punishment.listeners.ChatListener;
 import xyz.mintydev.punishment.listeners.DataListener;
 import xyz.mintydev.punishment.managers.ConfigManager;
 import xyz.mintydev.punishment.managers.LangManager;
@@ -27,15 +29,20 @@ public class MINTPunishment extends JavaPlugin {
 		registerCommands();
 		registerListeners();
 		
-		getLogger().info("Plugin enabled. Thanks for choosing MINTPunishment !");
+		if(isEnabled()) getLogger().info("Plugin enabled. Thanks for choosing MINTPunishment !");
 	}
 	
 	private void registerListeners() {
+		if(!isEnabled()) return;
 		getServer().getPluginManager().registerEvents(new DataListener(instance), instance);
+		getServer().getPluginManager().registerEvents(new ChatListener(instance), instance);
 	}
 
 	private void registerCommands() {
-		this.getCommand("ban").setExecutor(new BanCommand());
+		if(!isEnabled()) return;
+		this.getCommand("ban").setExecutor(new PunishmentCommand("ban", PunishmentType.BAN, PunishmentType.TEMP_BAN, true));
+		this.getCommand("mute").setExecutor(new PunishmentCommand("mute", PunishmentType.MUTE, PunishmentType.TEMP_MUTE, true));
+		this.getCommand("kick").setExecutor(new PunishmentCommand("kick", PunishmentType.KICK, null, false));
 	}
 
 	private void registerManagers() {

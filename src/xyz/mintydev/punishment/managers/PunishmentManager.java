@@ -10,6 +10,8 @@ import java.util.Set;
 import java.util.UUID;
 import java.util.logging.Level;
 
+import org.bukkit.entity.Player;
+
 import xyz.mintydev.punishment.MINTPunishment;
 import xyz.mintydev.punishment.core.PlayerProfile;
 import xyz.mintydev.punishment.core.Punishment;
@@ -51,6 +53,41 @@ public class PunishmentManager {
 		
 		return ban.getKickLayout();
 	}
+	
+	/** 
+	 * Function called when the player tries to chat in the server
+	 * 
+	 * @param NAME the player username
+	 * @param UUID the player UUID
+	 * @return null if connection is OK, or the ban layout
+	 * */
+	public boolean tryChat(Player player) {
+
+		final Punishment mute = getMute(player.getUniqueId());
+		if(mute != null) {
+			
+			final boolean isTemp = mute.getType() == PunishmentType.TEMP_MUTE;
+
+			for(String str : LangManager.getMessageList(isTemp ? "layouts.temp-mute" : "layouts.mute")) {
+				player.sendMessage(mute.replaceWithValues(str));
+			}
+			return false;
+		}
+		
+		return true;
+	}
+	
+	
+    /**
+     * Get a players active mute.
+     *
+     * @param uuid the players uuid
+     * @return the mute or <code>null</code> if not muted
+     */
+    public Punishment getMute(UUID uuid) {
+        List<Punishment> punishments = getPunishments(uuid, PunishmentType.MUTE, true);
+        return punishments.isEmpty() ? null : punishments.get(0);
+    }
 	
 	/** 
 	 * Function called to load the player data and add it to the cache
@@ -103,7 +140,6 @@ public class PunishmentManager {
 			// query database
 			try(ResultSet rSet = DatabaseManager.get().executeResultStatement(current ? SQLQuery.SELECT_USER_PUNISHMENTS_UUID : SQLQuery.SELECT_USER_PUNISHMENTS_HISTORY_UUID, uuid.toString())) {
 				while(rSet.next()) {
-					System.out.println("has next");
 					final Punishment dbPunishment = DatabaseManager.get().getPunishmentFromResultSet(rSet);
 					if(dbPunishment == null) continue;
 					toCheck.add(dbPunishment);
@@ -117,10 +153,9 @@ public class PunishmentManager {
 		// Filter punishments to correspond to criterias (X type only & active only)
 		for(Punishment p : toCheck) {
 			if(current && p.isExpired()) continue;
-			if(type != null && p.getType() != type) continue;
+			if(type != null && p.getType() != type && p.getType().getBase() != type) continue;
 			res.add(p);
 		}
-		
 		return res;
 	}
 	

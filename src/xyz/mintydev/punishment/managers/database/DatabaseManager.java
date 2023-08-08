@@ -38,8 +38,14 @@ public class DatabaseManager {
 	 * Function called to setup the database/hikari database connection
 	 * */
 	private void setup() {
-		dataSource = new DBDataSource().getNewDataSource();
-		
+		try {
+			dataSource = new DBDataSource().getNewDataSource();
+		}catch(Exception e) {
+			main.getLogger().log(Level.SEVERE, "Could not establish a connection to the MySQL Database. Stopping the plugin.");
+			main.getPluginLoader().disablePlugin(main);
+			return;
+		}
+
 		/* In case we can't connect to the MySQL Database, stop the plugin. */
 		if(!isConnectionValid()) {
 			main.getLogger().log(Level.SEVERE, "Could not establish a connection to the MySQL Database. Stopping the plugin.");
@@ -57,6 +63,7 @@ public class DatabaseManager {
 	 * Shutdown the database connection
 	 * */
 	public void shutdown() {
+		if(dataSource == null) return; // in case of crash / no connection
 		dataSource.close();
 	}
 	

@@ -2,30 +2,35 @@ package xyz.mintydev.punishment.core;
 
 public enum PunishmentType {
 
-	BAN("Ban", null, false, "mintpunishment.ban.perma", "broadcast.ban"),
-	TEMP_BAN("Tempban", BAN, false, "mintpunishment.ban.temp", "broadcast.temp-ban"),
-	MUTE("Mute", null, false, "mintpunishment.mute.perm", "broadcast.mute"),
-	TEMP_MUTE("Tempmute", MUTE, false, "mintpunishment.mute.temp", "broadcast.temp-mute"),
-	KICK("Kick", null, false, "mintpunishment.kick", "broadcast.kick");
+	BAN("Ban", "ban", null, false, "mintpunishment.ban.perma", "punishments.ban"),
+	TEMP_BAN("Tempban", "ban", BAN, false, "mintpunishment.ban.temp", "punishments.temp-ban"),
+	MUTE("Mute", "mute", null, false, "mintpunishment.mute.perm", "punishments.mute"),
+	TEMP_MUTE("Tempmute", "mute", MUTE, false, "mintpunishment.mute.temp", "punishments.temp-mute"),
+	KICK("Kick", "kick", null, false, "mintpunishment.kick", "punishments.kick");
 	
-	private final String name, perms, broadcast;
+	private final String name, perms, langPath, command;
 	private final PunishmentType base;
 	private final boolean temporary;
 	
-	PunishmentType(String name, PunishmentType base, boolean temporary, String perms, String broadcast){
+	PunishmentType(String name, String command, PunishmentType base, boolean temporary, String perms, String langPath){
 		this.name = name;
+		this.command = command;
 		this.base = base;
 		this.temporary = temporary;
 		this.perms = perms;
-		this.broadcast = broadcast;
+		this.langPath = langPath;
 	}
 
 	/*
 	 * Getters & Setters
 	 * */
 	
-	public String getBroadcast() {
-		return broadcast;
+	public String getCommand() {
+		return command;
+	}
+	
+	public String getLangPath() {
+		return langPath;
 	}
 	
 	public String getName() {

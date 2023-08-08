@@ -5,7 +5,6 @@ import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
-import java.util.concurrent.TimeUnit;
 
 import org.bukkit.Bukkit;
 
@@ -89,41 +88,14 @@ public class Punishment {
     
     	/* Broadcast */
     	if(!silent) {
-    		for(String str : LangManager.getMessageList(this.type.getBroadcast())) {
+    		for(String str : LangManager.getMessageList(this.type.getLangPath() + ".broadcast")) {
     			str = replaceWithValues(str);
     			Bukkit.broadcastMessage(str);
     		}
     	}
     }
-    
-    /** 
-     * Format the duration of the punishment
-     * 
-     * @return String formatted duration like : "1 day, 12 hours and 1 second"
-     * */
-    public String getDurationFormatted() {
-    	if(endDate == null) return null;
-    	long duration = endDate.getTime() - startDate.getTime();
-    	
-    	int seconds = (int) (duration / 1000) % 60 ;
-    	int minutes = (int) ((duration / (1000*60)) % 60);
-    	int hours   = (int) ((duration / (1000*60*60)) % 24);
-    	int days   = (int) ((duration / (1000*60*60*24)) % 24);
-    	int months   = (int) ((duration / (1000*60*60*24*30)) % 24);
-    	int years   = (int) ((duration / (1000*60*60*24*30*365)) % 24);
-    	
-    	String res = "";
-    	if(years > 0) res += " " + years + " " + (years > 1 ? LangManager.getMessage("time-units.years") : LangManager.getMessage("time-units.year"));
-    	if(months > 0) res += " " + months + " " + (months > 1 ? LangManager.getMessage("time-units.months") : LangManager.getMessage("time-units.month"));
-    	if(days > 0) res += " " + days + " " + (days > 1 ? LangManager.getMessage("time-units.days") : LangManager.getMessage("time-units.day"));
-    	if(hours > 0) res += " " + hours + " " + (hours > 1 ? LangManager.getMessage("time-units.hours") : LangManager.getMessage("time-units.day"));
-    	if(minutes > 0) res += " " + minutes + " " + (minutes > 1 ? LangManager.getMessage("time-units.minutes") : LangManager.getMessage("time-units.minute"));
-    	if(seconds > 0) res += " " + seconds + " " + (seconds > 1 ? LangManager.getMessage("time-units.seconds") : LangManager.getMessage("time-units.second"));
 
-    	return res.substring(1);
-    }
-    
-    private String replaceWithValues(final String str) {
+    public String replaceWithValues(final String str) {
     	String res = str;
     	res = res.replaceAll("%reason%", this.reason);
     	res = res.replaceAll("%operator%", this.operatorName);
@@ -131,10 +103,12 @@ public class Punishment {
     	res = res.replaceAll("%start_date%", CalendarUtil.getFormatted(this.startDate));
 		res = res.replaceAll("%id%", (id > 0 ? id+"" : "N/A"));
 		
-		res = res.replaceAll("%duration%", getDurationFormatted());
-		
-		if(this.type == PunishmentType.TEMP_BAN) {
+		if(this.type == PunishmentType.TEMP_BAN || this.type == PunishmentType.TEMP_MUTE) {
 			res = res.replaceAll("%end_date%", CalendarUtil.getFormatted(this.endDate));
+			final long duration = endDate.getTime() - startDate.getTime();
+			res = res.replaceAll("%duration%", CalendarUtil.getDurationFormatted(duration));
+			final long remaining = endDate.getTime() - new Date().getTime();
+			res = res.replaceAll("%timeleft%", CalendarUtil.getDurationFormatted(remaining));
 		}
 		return res;
     }

@@ -6,3 +6,8 @@ commands:
   ban:
     aliases: tempban, tban
     description: ban command
+  mute:
+    aliases: tempmute, mute
+    description: mute command
+  kick:
+    description: kick command
