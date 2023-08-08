@@ -10,6 +10,7 @@ import java.util.Set;
 import java.util.UUID;
 import java.util.logging.Level;
 
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 import xyz.mintydev.punishment.MINTPunishment;
@@ -31,6 +32,14 @@ public class PunishmentManager {
 	public PunishmentManager(MINTPunishment main) {
 		this.main = main;
 		instance = this;
+		
+		// In case of reloads, put online players into cache
+		for(Player player : Bukkit.getOnlinePlayers()) {
+        	final String connectionResult = PunishmentManager.get().tryConnection(player.getName(), player.getUniqueId());
+        	if(connectionResult != null) {
+        		player.kickPlayer(connectionResult);
+        	}
+		}
 	}
 
 	/** 
@@ -64,6 +73,7 @@ public class PunishmentManager {
 	public boolean tryChat(Player player) {
 
 		final Punishment mute = getMute(player.getUniqueId());
+	
 		if(mute != null) {
 			
 			final boolean isTemp = mute.getType() == PunishmentType.TEMP_MUTE;
@@ -130,12 +140,10 @@ public class PunishmentManager {
 		List<Punishment> toCheck = new ArrayList<>();
 		
 		if(isCached(uuid.toString())) {
-			for(Punishment p : punishments) {
+			for(Punishment p : getLoadedPunishments()) {
 				if(!(p.getPlayerUUID().equals(uuid))) continue;
 				toCheck.add(p);
 			}
-			
-			return res;
 		} else {
 			// query database
 			try(ResultSet rSet = DatabaseManager.get().executeResultStatement(current ? SQLQuery.SELECT_USER_PUNISHMENTS_UUID : SQLQuery.SELECT_USER_PUNISHMENTS_HISTORY_UUID, uuid.toString())) {
@@ -153,7 +161,12 @@ public class PunishmentManager {
 		// Filter punishments to correspond to criterias (X type only & active only)
 		for(Punishment p : toCheck) {
 			if(current && p.isExpired()) continue;
-			if(type != null && p.getType() != type && p.getType().getBase() != type) continue;
+			if(type != null) {
+				// select by type
+				if(p.getType() != type && p.getType().getBase() != type) {
+					continue;
+				}
+			}
 			res.add(p);
 		}
 		return res;
@@ -186,8 +199,8 @@ public class PunishmentManager {
 	}
 
 	public void addCached(PlayerProfile profile) {
-		this.cachedData.add(profile.getUuid());
-		this.cachedData.add(profile.getName());
+		cachedData.add(profile.getUuid());
+		cachedData.add(profile.getName());
 	}
 	
 	/* 

@@ -64,7 +64,7 @@ public class PunishmentCommand implements CommandExecutor {
 			}
 			if(arg.equalsIgnoreCase(playerName)) continue;
 			
-			if(totalDuration > 0 && arg.equalsIgnoreCase(args[1])) continue;
+			if(totalDuration > 0 && arg.equalsIgnoreCase(args[1]) && takeTime) continue;
 			reason += arg + " ";
 		}
 		

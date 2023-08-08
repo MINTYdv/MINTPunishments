@@ -39,6 +39,11 @@ layouts:
     - ''
     - '&7Appeal at : &fwww.appeal.myserver.com'
     - ''
+  kick:
+    - ''
+    - '&cYou have been kicked from the server.'
+    - '&cReason: &4%reason%'
+    - ''
 default-reason: "No reason specified."
 punishments:
   ban:
@@ -69,7 +74,7 @@ punishments:
     apply-message: "&a%player% has successfully been temp-muted for %reason%."
     broadcast:
       - ""
-      - "&c&lMINTPunishments &f» &c%player% &fhas been &cmuted &ffor &c%time% &fby &c%operator% &ffor &c%reason%&f."
+      - "&c&lMINTPunishments &f» &c%player% &fhas been &cmuted &ffor &c%duration% &fby &c%operator% &ffor &c%reason%&f."
       - ""
 errors:
   reason-too-long: "&cThe ban reason is too long. (The limit is 255 characters)"

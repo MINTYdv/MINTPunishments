@@ -2,6 +2,8 @@ package xyz.mintydev.punishment.core;
 
 import java.util.Set;
 
+import org.bukkit.Bukkit;
+
 import xyz.mintydev.punishment.managers.PunishmentManager;
 
 public class PlayerProfile {
