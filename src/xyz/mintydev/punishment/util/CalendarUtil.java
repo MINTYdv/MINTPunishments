@@ -35,24 +35,24 @@ public class CalendarUtil {
     /** 
      * Format the duration of the punishment
      * 
+     * @param long duration in milliseconds
      * @return String formatted duration like : "1 day, 12 hours and 1 second"
      * */
     public static String getDurationFormatted(long duration) {
     	if(duration <= 0) return "N/A";
-//    	long duration = endDate.getTime() - startDate.getTime();
     	
-    	int seconds = (int) (duration / 1000) % 60 ;
-    	int minutes = (int) ((duration / (1000*60)) % 60);
-    	int hours   = (int) ((duration / (1000*60*60)) % 24);
-    	int days   = (int) ((duration / (1000*60*60*24)) % 24);
-    	int months   = (int) ((duration / (1000*60*60*24*30)) % 24);
-    	int years   = (int) ((duration / (1000*60*60*24*30*365)) % 24);
+        int seconds = (int) (duration / 1000) % 60;
+        int minutes = (int) ((duration / (1000 * 60)) % 60);
+        int hours = (int) ((duration / (1000 * 60 * 60)) % 24);
+        int days = (int) ((duration / (1000 * 60 * 60 * 24)) % 30); // Changed from % 24 to % 30 for days
+        int months = (int) ((duration / (1000L * 60 * 60 * 24 * 30)) % 12); // Changed % 24 to % 12 and added 'L' to ensure long division
+        int years = (int) (duration / (1000L * 60 * 60 * 24 * 30 * 12)); // Changed % 24 to division
     	
     	String res = "";
     	if(years > 0) res += " " + years + " " + (years > 1 ? LangManager.getMessage("time-units.years") : LangManager.getMessage("time-units.year"));
     	if(months > 0) res += " " + months + " " + (months > 1 ? LangManager.getMessage("time-units.months") : LangManager.getMessage("time-units.month"));
     	if(days > 0) res += " " + days + " " + (days > 1 ? LangManager.getMessage("time-units.days") : LangManager.getMessage("time-units.day"));
-    	if(hours > 0) res += " " + hours + " " + (hours > 1 ? LangManager.getMessage("time-units.hours") : LangManager.getMessage("time-units.day"));
+    	if(hours > 0) res += " " + hours + " " + (hours > 1 ? LangManager.getMessage("time-units.hours") : LangManager.getMessage("time-units.hour"));
     	if(minutes > 0) res += " " + minutes + " " + (minutes > 1 ? LangManager.getMessage("time-units.minutes") : LangManager.getMessage("time-units.minute"));
     	if(seconds > 0) res += " " + seconds + " " + (seconds > 1 ? LangManager.getMessage("time-units.seconds") : LangManager.getMessage("time-units.second"));
 
@@ -61,7 +61,7 @@ public class CalendarUtil {
 	
     public static TimeUnit getUnit(String s) {
         if(s.toLowerCase().indexOf("y")==s.length()-1){return TimeUnit.YEAR;}
-        if(s.toLowerCase().indexOf("mm")==s.length()-1){return TimeUnit.MONTH;}
+        if(s.toLowerCase().indexOf("mo")==s.length()-2){return TimeUnit.MONTH;}
         if(s.toLowerCase().indexOf("d")==s.length()-1){return TimeUnit.DAY;}
         if(s.toLowerCase().indexOf("h")==s.length()-1){return TimeUnit.HOUR;}
         if(s.toLowerCase().indexOf("m")==s.length()-1){return TimeUnit.MINUTE;}
@@ -74,7 +74,7 @@ public class CalendarUtil {
         	case YEAR:
             	return Integer.parseInt(s.toLowerCase().replaceAll("y",""))*TimeUnit.YEAR.getMilliseconds();
         	case MONTH:
-        		return Integer.parseInt(s.toLowerCase().replaceAll("mm",""))*TimeUnit.MONTH.getMilliseconds();
+        		return Integer.parseInt(s.toLowerCase().replaceAll("mo",""))*TimeUnit.MONTH.getMilliseconds();
             case DAY:
                 return Integer.parseInt(s.toLowerCase().replaceAll("d",""))*TimeUnit.DAY.getMilliseconds();
             case HOUR:

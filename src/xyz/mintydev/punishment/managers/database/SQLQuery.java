@@ -42,6 +42,7 @@ public enum SQLQuery {
 	SELECT_EXACT_PUNISHMENT("SELECT * FROM `mp_active` WHERE `uuid` = ? AND `start` = ? AND `type` = ?"),
 	SELECT_USER_PUNISHMENTS_HISTORY_UUID("SELECT * FROM `mp_expired` WHERE `uuid` = ?"),
 	SELECT_ALL_PUNISHMENTS("SELECT * FROM `mp_active`"),
+	DELETE_PUNISHMENT_TYPE("DELETE FROM `mp_active` WHERE `uuid` = ? AND `type` = ?"),
 	DELETE_PUNISHMENT("DELETE FROM `mp_active` WHERE `id` = ?"),
 	SELECT_PUNISHMENTS_ID("SELECT * FROM `mp_active` WHERE `id` = ?"),
 	DELETE_OLD_PUNISHMENTS("DELETE FROM `mp_active` WHERE `end` <= ?");

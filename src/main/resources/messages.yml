@@ -76,6 +76,13 @@ punishments:
       - ""
       - "&c&lMINTPunishments &f» &c%player% &fhas been &cmuted &ffor &c%duration% &fby &c%operator% &ffor &c%reason%&f."
       - ""
+  revoke:
+    ban:
+      no-active: "&cError : %player% is not currently banned."
+      success: "&a%player% has successfully been unbanned."
+    mute:
+      no-active: "&cError : %player% is not currently muted."
+      success: "&a%player% has successfully been unmuted."
 errors:
   reason-too-long: "&cThe ban reason is too long. (The limit is 255 characters)"
 time-units:

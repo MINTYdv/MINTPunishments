@@ -139,6 +139,8 @@ public class PunishmentManager {
 		List<Punishment> res = new ArrayList<>();
 		List<Punishment> toCheck = new ArrayList<>();
 		
+		if(uuid == null) return null;
+		
 		if(isCached(uuid.toString())) {
 			for(Punishment p : getLoadedPunishments()) {
 				if(!(p.getPlayerUUID().equals(uuid))) continue;

@@ -11,3 +11,7 @@ commands:
     description: mute command
   kick:
     description: kick command
+  unban:
+    description: unban command
+  unmute:
+    description: unmute command

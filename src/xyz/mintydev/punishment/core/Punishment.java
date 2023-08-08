@@ -54,6 +54,14 @@ public class Punishment {
 		execute(false);
 	}
 	
+	public void delete(String operator) {
+		
+		DatabaseManager.get().executeStatement(SQLQuery.DELETE_PUNISHMENT, getId());
+		
+		/* Remove punishment from cache */
+		PunishmentManager.get().getLoadedPunishments().remove(this);
+	}
+	
     public void execute(boolean silent) {
     	/* Set default reason */
     	if(reason.length() == 0) {

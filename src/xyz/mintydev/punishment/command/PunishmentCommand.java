@@ -3,6 +3,7 @@ package xyz.mintydev.punishment.command;
 import java.util.Date;
 import java.util.UUID;
 
+import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -50,6 +51,7 @@ public class PunishmentCommand implements CommandExecutor {
 			final TimeUnit unit = CalendarUtil.getUnit(args[1]);
 			if(unit != null) {
 				totalDuration = CalendarUtil.getNumberfromUnit(args[1], unit);
+				Bukkit.broadcastMessage(totalDuration+"");
 			}
 		}
 		
@@ -94,7 +96,7 @@ public class PunishmentCommand implements CommandExecutor {
 	
 		pt.execute(silent);
 		
-		final String applyMsg = pt.replaceWithValues(LangManager.getMessage(this.type.getLangPath() + ".apply-message"));
+		final String applyMsg = pt.replaceWithValues(LangManager.getMessage(totalDuration > 0 ? this.tempType.getLangPath() + ".apply-message": this.type.getLangPath() + ".apply-message"));
 		sender.sendMessage(applyMsg);
 		return true;
 	}
