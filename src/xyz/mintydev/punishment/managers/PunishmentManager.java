@@ -136,6 +136,13 @@ public class PunishmentManager {
 		return new PlayerProfile(name, uuid.toString(), punishments, history);
 	}
 	
+	/** 
+	 * Function called to query the cache and/or the database for player's active or expired punishments
+	 * 
+	 * @param UUID the player's UUID
+	 * @param PunishmentType the type of the punishment, null will return all punishments
+	 * @param boolean Filter only active punishments (true = only active, false = both active and expired)
+	 * */
 	public List<Punishment> getPunishments(UUID uuid, PunishmentType type, boolean current){
 		List<Punishment> res = new ArrayList<>();
 		List<Punishment> toCheck = new ArrayList<>();
@@ -178,6 +185,12 @@ public class PunishmentManager {
 		return res;
 	}
 	
+	/** 
+	 * Function called to remove a player's data from the cache
+	 * 
+	 * @param String the player username
+	 * @param UUID the player UUID
+	 * */
 	public void removeCache(String name, UUID uuid) {
 		if(this.cachedData.contains(name)) cachedData.remove(name);
 		if(this.cachedData.contains(uuid.toString())) cachedData.remove(uuid.toString());
