@@ -34,6 +34,11 @@ public class PunishmentCommand implements CommandExecutor {
 		
 		// Usage : /ban <player> [time] <reason> [-s]
 		
+		if(!sender.hasPermission(type.getApplyPerm())) {
+			sender.sendMessage(LangManager.getMessage("errors.no-permission").replaceAll("%perm%", type.getApplyPerm()));
+			return false;
+		}
+		
 		if(args == null || args.length < 1) {
 			wrongUsage(sender);
 			return false;

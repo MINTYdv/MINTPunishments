@@ -3,6 +3,8 @@ package xyz.mintydev.punishment.util;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.bukkit.Bukkit;
+
 public class PaginationUtil<T> {
 	
 	private List<T> items;
@@ -35,6 +37,12 @@ public class PaginationUtil<T> {
 		}
 		
 		return res;
+	}
+	
+	public int getPagesAmount() {
+		double res = items.size() / itemsPerPage;
+		if(items.size() % itemsPerPage > 0.0D) res++;
+		return (int) Math.ceil(res);
 	}
 	
 	/** 

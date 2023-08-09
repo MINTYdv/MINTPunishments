@@ -2,23 +2,24 @@ package xyz.mintydev.punishment.core;
 
 public enum PunishmentType {
 
-	BAN("Ban", "ban", null, false, "mintpunishment.ban.perma", "punishments.ban"),
-	TEMP_BAN("Tempban", "ban", BAN, true, "mintpunishment.ban.temp", "punishments.temp-ban"),
-	MUTE("Mute", "mute", null, false, "mintpunishment.mute.perm", "punishments.mute"),
-	TEMP_MUTE("Tempmute", "mute", MUTE, true, "mintpunishment.mute.temp", "punishments.temp-mute"),
-	BLACKLIST("Blacklist", "blacklist", null, false, "mintpunishment.blacklist", "punishments.blacklist"),
-	KICK("Kick", "kick", null, false, "mintpunishment.kick", "punishments.kick");
+	BAN("Ban", "ban", null, false, "mintpunishment.ban.perma", "mintpunishment.unban", "punishments.ban"),
+	TEMP_BAN("Tempban", "ban", BAN, true, "mintpunishment.ban.temp", "mintpunishment.unban", "punishments.temp-ban"),
+	MUTE("Mute", "mute", null, false, "mintpunishment.mute.perm", "mintpunishment.unmute","punishments.mute"),
+	TEMP_MUTE("Tempmute", "mute", MUTE, true, "mintpunishment.mute.temp", "mintpunishment.unmute", "punishments.temp-mute"),
+	BLACKLIST("Blacklist", "blacklist", null, false, "mintpunishment.blacklist", "mintpunishment.unblacklist", "punishments.blacklist"),
+	KICK("Kick", "kick", null, false, "mintpunishment.kick", "", "punishments.kick");
 	
-	private final String name, perms, langPath, command;
+	private final String name, applyPerm, revokePerm, langPath, command;
 	private final PunishmentType base;
 	private final boolean temporary;
 	
-	PunishmentType(String name, String command, PunishmentType base, boolean temporary, String perms, String langPath){
+	PunishmentType(String name, String command, PunishmentType base, boolean temporary, String applyPerm, String revokePerm, String langPath){
 		this.name = name;
 		this.command = command;
 		this.base = base;
 		this.temporary = temporary;
-		this.perms = perms;
+		this.applyPerm = applyPerm;
+		this.revokePerm = revokePerm;
 		this.langPath = langPath;
 	}
 
@@ -46,10 +47,12 @@ public enum PunishmentType {
 		return temporary;
 	}
 
-	public String getPerms() {
-		return perms;
+	public String getApplyPerm() {
+		return applyPerm;
 	}
 	
-	
-	
+	public String getRevokePerm() {
+		return revokePerm;
+	}
+
 }

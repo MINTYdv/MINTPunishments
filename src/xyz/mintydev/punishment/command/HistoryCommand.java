@@ -10,6 +10,7 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 
 import xyz.mintydev.punishment.core.Punishment;
+import xyz.mintydev.punishment.core.PunishmentType;
 import xyz.mintydev.punishment.managers.LangManager;
 import xyz.mintydev.punishment.managers.PunishmentManager;
 import xyz.mintydev.punishment.util.PaginationUtil;
@@ -54,18 +55,17 @@ public class HistoryCommand implements CommandExecutor {
 		
 		// open page pageNumber
 		
-		List<Punishment> punishments = PunishmentManager.get().getPunishments(playerUUID, null, false);
+		List<Punishment> expired = PunishmentManager.get().getPunishments(playerUUID, null, false);
+		List<Punishment> punishments = expired;
 		punishments.addAll(PunishmentManager.get().getPunishments(playerUUID, null, true));
-		
-		Bukkit.broadcastMessage(punishments.size() + " punishments history");
-		
+
 		if(punishments == null || punishments.size() == 0) {
 			sender.sendMessage(LangManager.getMessage("history.no-history").replaceAll("%player%", playerName));
 			return false;
 		}
 		
 		// do the pagination
-		PaginationUtil<Punishment> pagination = new PaginationUtil<>(punishments, 1);
+		PaginationUtil<Punishment> pagination = new PaginationUtil<>(punishments, 10);
 		
 		if(pagination.getContents(pageNumber) == null || pagination.getContents(pageNumber).size() == 0) {
 			sender.sendMessage(LangManager.getMessage("history.invalid-page").replaceAll("%player%", playerName));
@@ -75,15 +75,23 @@ public class HistoryCommand implements CommandExecutor {
 		List<String> res = new ArrayList<>();
 		for(String str : LangManager.getMessageList("history.history-format")) {
 			str = str.replaceAll("%page%", pageNumber+"");
+			str = str.replaceAll("%player%", playerName);
+			str = str.replaceAll("%maxpage%", pagination.getPagesAmount()+"");
 			
 			if(str.toLowerCase().contains("%content%")) {
 				for(final Punishment punishment : pagination.getContents(pageNumber)) {
 					
 					String pLine = LangManager.getMessage("history.history-line");
 					pLine = punishment.replaceWithValues(pLine);
-					if(punishment.getType().getBase() == null) {
+					
+					if(!punishment.getType().isTemporary()) {
 						pLine = pLine.replaceAll("%duration%", "Permanent");
 					}
+					
+					if(!expired.contains(punishment)) {
+						pLine += " " + LangManager.getMessage("history.active");
+					}
+					
 					res.add(pLine);
 				}
 			} else {

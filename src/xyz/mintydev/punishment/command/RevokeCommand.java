@@ -29,6 +29,11 @@ public class RevokeCommand implements CommandExecutor {
 		
 		// Usage : /unban <player>
 		
+		if(!sender.hasPermission(type.getRevokePerm())) {
+			sender.sendMessage(LangManager.getMessage("errors.no-permission").replaceAll("%perm%", type.getRevokePerm()));
+			return false;
+		}
+		
 		if(args == null || args.length < 1) {
 			wrongUsage(sender);
 			return false;

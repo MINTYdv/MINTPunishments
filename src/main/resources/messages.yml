@@ -106,14 +106,16 @@ punishments:
 history:
   no-history: "&cError : %player% has no history."
   invalid-page: "&cError : Invalid page number provided"
+  active: "&a&lACTIVE"
   history-format:
     - "&e%player%'s history"
     - ""
     - "%content%"
     - ""
     - "&ePage: &6%page%/%maxpage%"
-  history-line: "&6- &e&l%type% &7%duration% &8(Reason : %reason% ; Operator : %operator%)"
+  history-line: "&6- &e&l%type% &7%duration% &8(Reason : %reason% ; by %operator% - %start_date%)"
 errors:
+  no-permission: "&cError : You don't have the required permission to execute this command (%perm%)"
   reason-too-long: "&cThe ban reason is too long. (The limit is 255 characters)"
 time-units:
   years: "years"

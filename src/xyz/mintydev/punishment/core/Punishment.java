@@ -107,13 +107,14 @@ public class Punishment {
 
     public String replaceWithValues(final String str) {
     	String res = str;
+    	res = res.replaceAll("%type%", this.type.getName());
     	res = res.replaceAll("%reason%", this.reason);
     	res = res.replaceAll("%operator%", this.operatorName);
     	res = res.replaceAll("%player%", this.playerName);
     	res = res.replaceAll("%start_date%", CalendarUtil.getFormatted(this.startDate));
 		res = res.replaceAll("%id%", (id > 0 ? id+"" : "N/A"));
 		
-		if(this.type == PunishmentType.TEMP_BAN || this.type == PunishmentType.TEMP_MUTE) {
+		if(this.type.isTemporary()) {
 			res = res.replaceAll("%end_date%", CalendarUtil.getFormatted(this.endDate));
 			final long duration = endDate.getTime() - startDate.getTime();
 			res = res.replaceAll("%duration%", CalendarUtil.getDurationFormatted(duration));
