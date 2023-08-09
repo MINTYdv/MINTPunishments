@@ -53,14 +53,15 @@ public class PunishmentManager {
 		final PlayerProfile profile = load(name, uuid);
 		
 		final Punishment ban = profile.getBan();
+		final Punishment bl = profile.getBlacklist();
 		
-		if(ban == null) {
+		if(ban == null && bl == null) {
 			// No ban, add the profile to the cache
 			profile.acceptLoad();
 			return null;
 		}
 		
-		return ban.getKickLayout();
+		return ban != null ? ban.getKickLayout() : bl.getKickLayout();
 	}
 	
 	/** 

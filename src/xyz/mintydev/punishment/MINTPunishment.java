@@ -2,6 +2,7 @@ package xyz.mintydev.punishment;
 
 import org.bukkit.plugin.java.JavaPlugin;
 
+import xyz.mintydev.punishment.command.HistoryCommand;
 import xyz.mintydev.punishment.command.PunishmentCommand;
 import xyz.mintydev.punishment.command.RevokeCommand;
 import xyz.mintydev.punishment.core.PunishmentType;
@@ -43,11 +44,14 @@ public class MINTPunishment extends JavaPlugin {
 		if(!isEnabled()) return;
 		
 		this.getCommand("ban").setExecutor(new PunishmentCommand("ban", PunishmentType.BAN, PunishmentType.TEMP_BAN, true));
+		this.getCommand("blacklist").setExecutor(new PunishmentCommand("ban", PunishmentType.BLACKLIST, null, false));
 		this.getCommand("mute").setExecutor(new PunishmentCommand("mute", PunishmentType.MUTE, PunishmentType.TEMP_MUTE, true));
 		this.getCommand("kick").setExecutor(new PunishmentCommand("kick", PunishmentType.KICK, null, false));
 		
 		this.getCommand("unmute").setExecutor(new RevokeCommand("unmute", PunishmentType.MUTE, "mute"));
 		this.getCommand("unban").setExecutor(new RevokeCommand("unban", PunishmentType.BAN, "ban"));
+		
+		this.getCommand("history").setExecutor(new HistoryCommand());
 	}
 
 	private void registerManagers() {

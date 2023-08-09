@@ -90,7 +90,7 @@ public class Punishment {
     		PunishmentManager.get().getLoadedPunishments().add(this);
     		
     		// kick player if online & ban/tempban
-    		if(this.type == PunishmentType.BAN || this.type.getBase() == PunishmentType.BAN || this.type == PunishmentType.KICK) {
+    		if(this.type == PunishmentType.BAN || this.type == PunishmentType.BLACKLIST || this.type.getBase() == PunishmentType.BAN || this.type == PunishmentType.KICK) {
     			Bukkit.getPlayer(playerName).kickPlayer(this.getKickLayout());
     		}
     	}
@@ -128,6 +128,8 @@ public class Punishment {
     	
     	if(this.type == PunishmentType.KICK) {
     		base.addAll(LangManager.getMessageList("layouts.kick"));
+    	} else if(this.type == PunishmentType.BLACKLIST){
+    		base.addAll(LangManager.getMessageList("layouts.blacklisted"));
     	} else {
     		base.addAll(LangManager.getMessageList(this.type == PunishmentType.TEMP_BAN ? "layouts.banned-temp" : "layouts.banned"));
     	}

@@ -41,6 +41,15 @@ public class PlayerProfile {
     	PunishmentManager.get().addCached(this);
     }
     
+    public Punishment getBlacklist() {
+        for (final Punishment pt : punishments) {
+            if (pt.getType() == PunishmentType.BLACKLIST || pt.getType().getBase() == PunishmentType.BLACKLIST && !pt.isExpired()) {
+                return pt;
+            }
+        }
+        return null;
+    }
+    
     public Punishment getBan() {
         for (final Punishment pt : punishments) {
             if (pt.getType() == PunishmentType.BAN || pt.getType().getBase() == PunishmentType.BAN && !pt.isExpired()) {
