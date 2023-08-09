@@ -1,6 +1,7 @@
 package xyz.mintydev.punishment.util;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.bukkit.Bukkit;
@@ -40,8 +41,7 @@ public class PaginationUtil<T> {
 	}
 	
 	public int getPagesAmount() {
-		double res = items.size() / itemsPerPage;
-		if(items.size() % itemsPerPage > 0.0D) res++;
+		double res = (double) items.size() / itemsPerPage;
 		return (int) Math.ceil(res);
 	}
 	

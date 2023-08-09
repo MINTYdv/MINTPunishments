@@ -1,16 +1,17 @@
 package xyz.mintydev.punishment.command;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.UUID;
 
-import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 
 import xyz.mintydev.punishment.core.Punishment;
-import xyz.mintydev.punishment.core.PunishmentType;
+import xyz.mintydev.punishment.managers.ConfigManager;
 import xyz.mintydev.punishment.managers.LangManager;
 import xyz.mintydev.punishment.managers.PunishmentManager;
 import xyz.mintydev.punishment.util.PaginationUtil;
@@ -55,17 +56,26 @@ public class HistoryCommand implements CommandExecutor {
 		
 		// open page pageNumber
 		
-		List<Punishment> expired = PunishmentManager.get().getPunishments(playerUUID, null, false);
-		List<Punishment> punishments = expired;
-		punishments.addAll(PunishmentManager.get().getPunishments(playerUUID, null, true));
-
-		if(punishments == null || punishments.size() == 0) {
+		final List<Punishment> activePunishments = PunishmentManager.get().getPunishments(playerUUID, null, true);
+		List<Punishment> allPunishments = new ArrayList<>();
+		allPunishments.addAll(PunishmentManager.get().getPunishments(playerUUID, null, false));
+		allPunishments.addAll(activePunishments);
+		
+		/* Sort by chronological order */
+        Collections.sort(allPunishments, new Comparator<Punishment>() {
+            @Override
+            public int compare(Punishment p1, Punishment p2) {
+                return p2.getStartDate().compareTo(p1.getStartDate());
+            }
+        });
+		
+		if(allPunishments == null || allPunishments.size() == 0) {
 			sender.sendMessage(LangManager.getMessage("history.no-history").replaceAll("%player%", playerName));
 			return false;
 		}
 		
 		// do the pagination
-		PaginationUtil<Punishment> pagination = new PaginationUtil<>(punishments, 10);
+		final PaginationUtil<Punishment> pagination = new PaginationUtil<>(allPunishments, ConfigManager.get().getEntriesPerPage());
 		
 		if(pagination.getContents(pageNumber) == null || pagination.getContents(pageNumber).size() == 0) {
 			sender.sendMessage(LangManager.getMessage("history.invalid-page").replaceAll("%player%", playerName));
@@ -88,7 +98,7 @@ public class HistoryCommand implements CommandExecutor {
 						pLine = pLine.replaceAll("%duration%", "Permanent");
 					}
 					
-					if(!expired.contains(punishment)) {
+					if(activePunishments.contains(punishment)) {
 						pLine += " " + LangManager.getMessage("history.active");
 					}
 					

@@ -42,5 +42,9 @@ public class ConfigManager {
 	public static ConfigManager get() {
 		return instance;
 	}
+
+	public int getEntriesPerPage() {
+		return main.getConfig().getInt("history.entries-per-page");
+	}
 	
 }

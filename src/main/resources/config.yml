@@ -5,3 +5,5 @@ mysql:
   password: ""
   port: 3306
 date-format: "dd/MM/yyyy HH:mm"
+history:
+  entries-per-page: 5
