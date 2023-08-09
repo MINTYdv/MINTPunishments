@@ -5,6 +5,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 
 public abstract class Command {
 
@@ -18,17 +19,17 @@ public abstract class Command {
 	}
 	
 	/** 
-	 * Code ran when the command is executed by a player (or the console)
+	 * Code ran when the {@link Command} is executed by a player (or the console)
 	 * 
-	 * @param CommandSender the command sender
+	 * @param {@link CommandSender} the command sender
 	 * @param String[] the command arguments
 	 * */
 	public abstract boolean execute(CommandSender sender, String[] args, String label) throws Exception;
 
 	/** 
-	 * Function called when the player has provided a wrong command usage
+	 * Function called when the {@link Player} has provided a wrong command usage
 	 * 
-	 * @param CommandSender sender
+	 * @param {@link CommandSender} sender
 	 * @param String the command label
 	 * */
 	public abstract void wrongUsage(CommandSender sender, String label);
