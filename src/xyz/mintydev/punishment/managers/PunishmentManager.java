@@ -157,7 +157,6 @@ public class PunishmentManager {
 					final Punishment dbPunishment = DatabaseManager.get().getPunishmentFromResultSet(rSet);
 					if(dbPunishment == null) continue;
 					toCheck.add(dbPunishment);
-					Bukkit.broadcastMessage(dbPunishment.toString());
 				}
 			}catch(Exception e) {
 				main.getLogger().log(Level.SEVERE, "Error while trying to fetch " + (current ? "active" : "expired") + " punishments for : " + uuid.toString() + ". Check database connection.");

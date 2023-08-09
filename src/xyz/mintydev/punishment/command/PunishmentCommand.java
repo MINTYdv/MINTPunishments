@@ -56,7 +56,6 @@ public class PunishmentCommand implements CommandExecutor {
 			final TimeUnit unit = CalendarUtil.getUnit(args[1]);
 			if(unit != null) {
 				totalDuration = CalendarUtil.getNumberfromUnit(args[1], unit);
-				Bukkit.broadcastMessage(totalDuration+"");
 			}
 		}
 		

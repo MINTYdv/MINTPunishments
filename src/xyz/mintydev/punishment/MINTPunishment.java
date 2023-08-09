@@ -8,6 +8,7 @@ import xyz.mintydev.punishment.command.RevokeCommand;
 import xyz.mintydev.punishment.core.PunishmentType;
 import xyz.mintydev.punishment.listeners.ChatListener;
 import xyz.mintydev.punishment.listeners.DataListener;
+import xyz.mintydev.punishment.managers.CommandManager;
 import xyz.mintydev.punishment.managers.ConfigManager;
 import xyz.mintydev.punishment.managers.LangManager;
 import xyz.mintydev.punishment.managers.PunishmentManager;
@@ -21,6 +22,7 @@ public class MINTPunishment extends JavaPlugin {
 	private DatabaseManager databaseManager;
 	private ConfigManager configManager;
 	private PunishmentManager punishmentManager;
+	private CommandManager commandManager;
 	
 	@Override
 	public void onEnable() {
@@ -42,6 +44,7 @@ public class MINTPunishment extends JavaPlugin {
 
 	private void registerCommands() {
 		if(!isEnabled()) return;
+		commandManager.registerCommands();
 		
 		this.getCommand("ban").setExecutor(new PunishmentCommand("ban", PunishmentType.BAN, PunishmentType.TEMP_BAN, true));
 		this.getCommand("blacklist").setExecutor(new PunishmentCommand("blacklist", PunishmentType.BLACKLIST, null, false));
@@ -61,6 +64,7 @@ public class MINTPunishment extends JavaPlugin {
 		langManager = new LangManager(instance);
 		databaseManager = new DatabaseManager(instance);
 		punishmentManager = new PunishmentManager(instance);
+		commandManager = new CommandManager(instance);
 	}
 
 	@Override
