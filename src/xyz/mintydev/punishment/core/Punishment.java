@@ -150,6 +150,10 @@ public class Punishment {
 		return reason;
 	}
 	
+	public void setId(int id) {
+		this.id = id;
+	}
+	
 	public String getOperatorName() {
 		return operatorName;
 	}

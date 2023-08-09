@@ -15,6 +15,8 @@ commands:
     description: unban command
   unmute:
     description: unmute command
+  unblacklist:
+    description: unblacklist command
   history:
     description: history command
   blacklist:

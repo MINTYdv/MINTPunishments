@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -55,6 +56,8 @@ public class HistoryCommand implements CommandExecutor {
 		
 		List<Punishment> punishments = PunishmentManager.get().getPunishments(playerUUID, null, false);
 		punishments.addAll(PunishmentManager.get().getPunishments(playerUUID, null, true));
+		
+		Bukkit.broadcastMessage(punishments.size() + " punishments history");
 		
 		if(punishments == null || punishments.size() == 0) {
 			sender.sendMessage(LangManager.getMessage("history.no-history").replaceAll("%player%", playerName));

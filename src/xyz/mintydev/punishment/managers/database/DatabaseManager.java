@@ -126,7 +126,7 @@ public class DatabaseManager {
      * @throws SQLException the sql exception
      */
     public Punishment getPunishmentFromResultSet(ResultSet rs) throws SQLException {
-        return new Punishment(PunishmentType.valueOf(rs.getString("type")),
+        Punishment res = new Punishment(PunishmentType.valueOf(rs.getString("type")),
         		UUID.fromString(rs.getString("uuid")),
         		rs.getString("name"),
         		rs.getString("operator") != null ? UUID.fromString(rs.getString("operator")) : null,
@@ -134,6 +134,12 @@ public class DatabaseManager {
         		new Date(rs.getLong("start")),
         		new Date(rs.getLong("end")),
         		rs.getString("reason"));
+    	
+        if(rs.getInt("id") != 0){
+        	res.setId(rs.getInt("id"));
+        }
+        
+    	return res;
     }
 	
 	

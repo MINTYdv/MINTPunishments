@@ -97,6 +97,9 @@ punishments:
     ban:
       no-active: "&cError : %player% is not currently banned."
       success: "&a%player% has successfully been unbanned."
+    blacklist:
+      no-active: "&cError : %player% is not currently blacklisted."
+      success: "&a%player% has successfully been un-blacklisted."
     mute:
       no-active: "&cError : %player% is not currently muted."
       success: "&a%player% has successfully been unmuted."
