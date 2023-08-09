@@ -119,6 +119,7 @@ history:
 errors:
   no-permission: "&cError : You don't have the required permission to execute this command (%perm%)"
   reason-too-long: "&cThe ban reason is too long. (The limit is 255 characters)"
+  unknown: "&cError : An error occured while trying to perform the command. Please contact the server owner or the plugin developer."
 time-units:
   years: "years"
   year: "year"

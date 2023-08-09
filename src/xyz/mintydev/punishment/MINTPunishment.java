@@ -2,10 +2,6 @@ package xyz.mintydev.punishment;
 
 import org.bukkit.plugin.java.JavaPlugin;
 
-import xyz.mintydev.punishment.command.HistoryCommand;
-import xyz.mintydev.punishment.command.PunishmentCommand;
-import xyz.mintydev.punishment.command.RevokeCommand;
-import xyz.mintydev.punishment.core.PunishmentType;
 import xyz.mintydev.punishment.listeners.ChatListener;
 import xyz.mintydev.punishment.listeners.DataListener;
 import xyz.mintydev.punishment.managers.CommandManager;
@@ -45,17 +41,6 @@ public class MINTPunishment extends JavaPlugin {
 	private void registerCommands() {
 		if(!isEnabled()) return;
 		commandManager.registerCommands();
-		
-		this.getCommand("ban").setExecutor(new PunishmentCommand("ban", PunishmentType.BAN, PunishmentType.TEMP_BAN, true));
-		this.getCommand("blacklist").setExecutor(new PunishmentCommand("blacklist", PunishmentType.BLACKLIST, null, false));
-		this.getCommand("mute").setExecutor(new PunishmentCommand("mute", PunishmentType.MUTE, PunishmentType.TEMP_MUTE, true));
-		this.getCommand("kick").setExecutor(new PunishmentCommand("kick", PunishmentType.KICK, null, false));
-		
-		this.getCommand("unmute").setExecutor(new RevokeCommand("unmute", PunishmentType.MUTE, "mute"));
-		this.getCommand("unban").setExecutor(new RevokeCommand("unban", PunishmentType.BAN, "ban"));
-		this.getCommand("unblacklist").setExecutor(new RevokeCommand("unblacklist", PunishmentType.BLACKLIST, "blacklist"));
-		
-		this.getCommand("history").setExecutor(new HistoryCommand());
 	}
 
 	private void registerManagers() {
@@ -80,6 +65,10 @@ public class MINTPunishment extends JavaPlugin {
 	
 	public ConfigManager getConfigManager() {
 		return configManager;
+	}
+	
+	public CommandManager getCommandManager() {
+		return commandManager;
 	}
 	
 	public PunishmentManager getPunishmentManager() {

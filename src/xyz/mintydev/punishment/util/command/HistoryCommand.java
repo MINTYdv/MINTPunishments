@@ -1,4 +1,4 @@
-package xyz.mintydev.punishment.command;
+package xyz.mintydev.punishment.util.command;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -6,8 +6,6 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.UUID;
 
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 
 import xyz.mintydev.punishment.core.Punishment;
@@ -17,23 +15,26 @@ import xyz.mintydev.punishment.managers.PunishmentManager;
 import xyz.mintydev.punishment.util.PaginationUtil;
 import xyz.mintydev.punishment.util.UUIDFetcher;
 
-public class HistoryCommand implements CommandExecutor {
+public class HistoryCommand extends Command {
+
+	public HistoryCommand(String... aliases) {
+		super(aliases);
+		
+		/* Setup command */
+		this.setMinArgs(1);
+		this.setMaxArgs(2);
+		this.addRequirement(new PermissionRequirement("mintpunishment.history"));
+	}
 
 	@Override
-	public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-		
+	public boolean execute(CommandSender sender, String[] args, String label) throws Exception {
 		int pageNumber = 1;
 		
-		// Usage : /history <player> [page]
-		
-		if(args == null || args.length < 1) {
-			wrongUsage(sender);
-			return false;
-		}
+		/* Usage : /history <player> [page] */
 		
 		final String playerName = args[0];
 		if(playerName.length() > 16) {
-			wrongUsage(sender);
+			wrongUsage(sender, label);
 			return false;
 		}
 
@@ -44,7 +45,7 @@ public class HistoryCommand implements CommandExecutor {
 			return false;
 		}
 		
-		if(args.length >= 2) {
+		if(args.length == 2) {
 			try {
 				pageNumber = Integer.parseInt(args[1]);
 			}catch(Exception e) {
@@ -112,9 +113,10 @@ public class HistoryCommand implements CommandExecutor {
 		for(String str : res) sender.sendMessage(str);
 		return true;
 	}
-	
-	private void wrongUsage(CommandSender sender) {
-		String res = String.format("§cUsage: /history <player> [page]");
+
+	@Override
+	public void wrongUsage(CommandSender sender, String label) {
+		String res = String.format("§cUsage: /" + label + " <player> [page]");
 		sender.sendMessage(res);
 	}
 

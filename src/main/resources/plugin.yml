@@ -2,22 +2,3 @@ name: MINTPunishment
 author: MINTY
 version: 1.0.0
 main: xyz.mintydev.punishment.MINTPunishment
-commands:
-  ban:
-    aliases: tempban, tban
-    description: ban command
-  mute:
-    aliases: tempmute, mute
-    description: mute command
-  kick:
-    description: kick command
-  unban:
-    description: unban command
-  unmute:
-    description: unmute command
-  unblacklist:
-    description: unblacklist command
-  history:
-    description: history command
-  blacklist:
-    description: blacklist command

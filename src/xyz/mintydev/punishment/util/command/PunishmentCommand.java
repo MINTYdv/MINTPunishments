@@ -1,11 +1,8 @@
-package xyz.mintydev.punishment.command;
+package xyz.mintydev.punishment.util.command;
 
 import java.util.Date;
 import java.util.UUID;
 
-import org.bukkit.Bukkit;
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -16,37 +13,31 @@ import xyz.mintydev.punishment.util.CalendarUtil;
 import xyz.mintydev.punishment.util.TimeUnit;
 import xyz.mintydev.punishment.util.UUIDFetcher;
 
-public class PunishmentCommand implements CommandExecutor {
+public class PunishmentCommand extends Command {
 
-	private final String id;
 	private final PunishmentType type, tempType;
 	private final boolean takeTime;
 	
-	public PunishmentCommand(String id, PunishmentType type, PunishmentType tempType, boolean takeTime) {
-		this.id = id;
+	public PunishmentCommand(PunishmentType type, PunishmentType tempType, boolean takeTime, String... aliases) {
+		super(aliases);
+		
+		/* Setup the command */
+		this.addRequirement(new PermissionRequirement(type.getApplyPerm()));
+		this.setMinArgs(1);
+		
+		/* Setup the punishment */
 		this.type = type;
 		this.tempType = tempType;
 		this.takeTime = takeTime;
 	}
 	
 	@Override
-	public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-		
-		// Usage : /ban <player> [time] <reason> [-s]
-		
-		if(!sender.hasPermission(type.getApplyPerm())) {
-			sender.sendMessage(LangManager.getMessage("errors.no-permission").replaceAll("%perm%", type.getApplyPerm()));
-			return false;
-		}
-		
-		if(args == null || args.length < 1) {
-			wrongUsage(sender);
-			return false;
-		}
+	public boolean execute(CommandSender sender, String[] args, String label) throws Exception {
+		/* Usage : /ban <player> [time] <reason> [-s] */
 		
 		final String playerName = args[0];
 		if(playerName.length() > 16) {
-			wrongUsage(sender);
+			wrongUsage(sender, label);
 			return false;
 		}
 		
@@ -104,19 +95,17 @@ public class PunishmentCommand implements CommandExecutor {
 		sender.sendMessage(applyMsg);
 		return true;
 	}
+
 	
-	private void wrongUsage(CommandSender sender) {
-		String res = String.format("§cUsage: /%s %s", id, "<player>" + (takeTime ? " [time]" : "") + " [reason] [-s]");
+	@Override
+	public void wrongUsage(CommandSender sender, String label) {
+		String res = String.format("§cUsage: /%s %s", label, "<player>" + (takeTime ? " [time]" : "") + " [reason] [-s]");
 		sender.sendMessage(res);
 	}
 	
 	/* 
 	 * Getters & Setters
 	 * */
-	
-	public String getId() {
-		return id;
-	}
 	
 	public PunishmentType getType() {
 		return type;
