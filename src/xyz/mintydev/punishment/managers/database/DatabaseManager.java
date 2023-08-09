@@ -102,8 +102,6 @@ public class DatabaseManager {
     		for (int i = 0; i < parameters.length; i++) {
     			statement.setObject(i + 1, parameters[i]);
     		}
-    		System.out.println(statement.toString());
-
     		if (result) {
     			CachedRowSet results = createCachedRowSet();
     			results.populate(statement.executeQuery());
