@@ -54,6 +54,11 @@ public class Punishment {
 		execute(false);
 	}
 	
+	/** 
+	 * Delete the punishment from the cache and the database
+	 * 
+	 * @param String the name of the operator (CONSOLE or player username)
+	 * */
 	public void delete(String operator) {
 		
 		DatabaseManager.get().executeStatement(SQLQuery.DELETE_PUNISHMENT, getId());
@@ -62,6 +67,11 @@ public class Punishment {
 		PunishmentManager.get().getLoadedPunishments().remove(this);
 	}
 	
+	/** 
+	 * Execute the punishment with all set parameters
+	 * 
+	 * @param boolean silent? (if silent, no broadcast will be shown)
+	 * */
     public void execute(boolean silent) {
     	/* Set default reason */
     	if(reason.length() == 0) {
@@ -105,6 +115,13 @@ public class Punishment {
     	}
     }
 
+    /** 
+     * Replaces a string placeholders with the values from the punishment
+     * object parameters.
+     * 
+     * @param String the string where to check for placeholders
+     * @return String the modified string with all found placeholders replaced with values
+     * */
     public String replaceWithValues(final String str) {
     	String res = str;
     	res = res.replaceAll("%type%", this.type.getName());
@@ -124,6 +141,11 @@ public class Punishment {
 		return res;
     }
     
+    /**
+     * Returns the kick layout of this punishment (for bans, kick or blacklists)
+     * 
+     * @return the kick layout in one line, spaced with \n and ready to use in the kick function
+     * */
     public String getKickLayout() {
     	List<String> base = new ArrayList<>();
     	
