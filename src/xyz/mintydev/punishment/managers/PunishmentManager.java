@@ -112,7 +112,7 @@ public class PunishmentManager {
 		Set<Punishment> history = new HashSet<>();
 
 		try(ResultSet rs = DatabaseManager.get().executeResultStatement(SQLQuery.SELECT_USER_PUNISHMENTS_UUID, uuid.toString());
-				ResultSet rsHistory = DatabaseManager.get().executeResultStatement(SQLQuery.SELECT_USER_PUNISHMENTS_UUID, uuid.toString())) {
+				ResultSet rsHistory = DatabaseManager.get().executeResultStatement(SQLQuery.SELECT_USER_PUNISHMENTS_HISTORY_UUID, uuid.toString())) {
 			
 			// Could not retrieve anything from DB
 			if(rs == null || rsHistory == null) {
@@ -143,10 +143,13 @@ public class PunishmentManager {
 		if(uuid == null) return null;
 		
 		if(isCached(uuid.toString())) {
-			for(Punishment p : getLoadedPunishments()) {
+			final Set<Punishment> source = current ? getLoadedPunishments() : getHistoryPunishments();
+			
+			for(Punishment p : source) {
 				if(!(p.getPlayerUUID().equals(uuid))) continue;
 				toCheck.add(p);
 			}
+
 		} else {
 			// query database
 			try(ResultSet rSet = DatabaseManager.get().executeResultStatement(current ? SQLQuery.SELECT_USER_PUNISHMENTS_UUID : SQLQuery.SELECT_USER_PUNISHMENTS_HISTORY_UUID, uuid.toString())) {
