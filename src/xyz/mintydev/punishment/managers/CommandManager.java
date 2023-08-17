@@ -79,12 +79,10 @@ public class CommandManager implements CommandExecutor {
 
 		for (Command cmd : commands) {
 			if (cmd.getAliases().contains(label)) {
-				// Check if the player fills all the requirements
 				if (!validRequirements(sender, cmd)) {
 					return false;
 				}
 
-				// Check if the args are correctly provided
 				if (cmd.getMinArgs() > 0 && (args == null || args.length < cmd.getMinArgs())) {
 					cmd.wrongUsage(sender, label);
 					return false;
@@ -94,7 +92,6 @@ public class CommandManager implements CommandExecutor {
 					return false;
 				}
 
-				// Execute the command
 				try {
 					cmd.execute(sender, args, label);
 				} catch (Exception e) {
