@@ -7,5 +7,5 @@ public abstract class CommandRequirement {
 	public abstract boolean isValid(CommandSender sender);
 
 	public abstract void sendError(CommandSender sender);
-	
+
 }

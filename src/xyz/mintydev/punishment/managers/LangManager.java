@@ -14,14 +14,13 @@ import xyz.mintydev.punishment.MINTPunishment;
 public class LangManager {
 
 	private final MINTPunishment main;
-	
+
 	private static File customConfigFile;
 	private static FileConfiguration customConfig;
-	
+
 	private final String fileName = "messages.yml";
-	
-	public LangManager(MINTPunishment main)
-	{
+
+	public LangManager(MINTPunishment main) {
 		this.main = main;
 		createCustomConfig();
 	}
@@ -29,49 +28,47 @@ public class LangManager {
 	public static String getMessage(final String KEY) {
 		return getCustomConfig().getString(KEY).replaceAll("&", "§");
 	}
-	
-	public static String getMessageListSplitted(final String KEY)
-	{
+
+	public static String getMessageListSplitted(final String KEY) {
 		String result = "";
-		
+
 		List<String> preResult = getMessageList(KEY);
-		for(String str : preResult) {
+		for (String str : preResult) {
 			result += str + "\n";
 		}
 		return result;
 	}
-	
-	public static List<String> getMessageList(final String KEY)
-	{
+
+	public static List<String> getMessageList(final String KEY) {
 		List<String> result = new ArrayList<>();
-		for(String key : getCustomConfig().getStringList(KEY)) {
+		for (String key : getCustomConfig().getStringList(KEY)) {
 			result.add(key.replaceAll("&", "§"));
 		}
 		return result;
 	}
-	
-    private void createCustomConfig() {
-        customConfigFile = new File(main.getDataFolder(), fileName);
-        if (!customConfigFile.exists()) {
-            customConfigFile.getParentFile().mkdirs();
-            main.saveResource(fileName, false);
-         }
 
-        customConfig= new YamlConfiguration();
-        try {
-            customConfig.load(customConfigFile);
-        } catch (IOException | InvalidConfigurationException e) {
-            e.printStackTrace();
-        }
-    }
-    
-    /* Getters & Setters */
-    
-    public static FileConfiguration getCustomConfig() {
+	private void createCustomConfig() {
+		customConfigFile = new File(main.getDataFolder(), fileName);
+		if (!customConfigFile.exists()) {
+			customConfigFile.getParentFile().mkdirs();
+			main.saveResource(fileName, false);
+		}
+
+		customConfig = new YamlConfiguration();
+		try {
+			customConfig.load(customConfigFile);
+		} catch (IOException | InvalidConfigurationException e) {
+			e.printStackTrace();
+		}
+	}
+
+	/* Getters & Setters */
+
+	public static FileConfiguration getCustomConfig() {
 		return customConfig;
 	}
-    
-    public static File getCustomConfigFile() {
+
+	public static File getCustomConfigFile() {
 		return customConfigFile;
-	}	
+	}
 }

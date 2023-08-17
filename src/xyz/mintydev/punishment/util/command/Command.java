@@ -13,65 +13,66 @@ public abstract class Command {
 	private ArrayList<CommandRequirement> requirements = new ArrayList<>();
 	private int minArgs = -1;
 	private int maxArgs = -1;
-	
+
 	public Command(String... aliases) {
-		for(String al : aliases) addAlias(al);
+		for (String al : aliases)
+			addAlias(al);
 	}
-	
-	/** 
+
+	/**
 	 * Code ran when the {@link Command} is executed by a player (or the console)
 	 * 
-	 * @param {@link CommandSender} the command sender
+	 * @param {@link   CommandSender} the command sender
 	 * @param String[] the command arguments
-	 * */
+	 */
 	public abstract boolean execute(CommandSender sender, String[] args, String label) throws Exception;
 
-	/** 
+	/**
 	 * Function called when the {@link Player} has provided a wrong command usage
 	 * 
 	 * @param {@link CommandSender} sender
 	 * @param String the command label
-	 * */
+	 */
 	public abstract void wrongUsage(CommandSender sender, String label);
-	
-	/* 
+
+	/*
 	 * Functions made to update command parameters
-	 * */
-	
+	 */
+
 	public void addAlias(String alias) {
 		this.aliases.add(alias);
 	}
-	
+
 	public void addRequirement(CommandRequirement req) {
 		this.requirements.add(req);
 	}
-	
+
 	public void setMinArgs(int minArgs) {
 		this.minArgs = minArgs;
 	}
-	
+
 	public void setMaxArgs(int maxArgs) {
 		this.maxArgs = maxArgs;
 	}
-	
-	/* 
+
+	/*
 	 * Getters & Setters
-	 * */
-	
+	 */
+
 	public int getMinArgs() {
 		return minArgs;
 	}
-	
+
 	public int getMaxArgs() {
 		return maxArgs;
 	}
-	
+
 	public Set<String> getAliases() {
 		return aliases;
 	}
-	
+
 	public ArrayList<CommandRequirement> getRequirements() {
 		return requirements;
 	}
-	
+
 }

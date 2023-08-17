@@ -11,9 +11,9 @@ public class FakeCommand extends org.bukkit.command.Command {
 		super(name);
 	}
 
-	/** 
+	/**
 	 * Returns the code to the {@link CommandManager}
-	 * */
+	 */
 	@Override
 	public boolean execute(CommandSender sender, String commandLabel, String[] args) {
 		return MINTPunishment.get().getCommandManager().onCommand(sender, this, commandLabel, args);
