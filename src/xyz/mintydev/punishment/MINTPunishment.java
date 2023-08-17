@@ -29,17 +29,15 @@ public class MINTPunishment extends JavaPlugin {
 		registerCommands();
 		registerListeners();
 		
-		if(isEnabled()) getLogger().info("Plugin enabled. Thanks for choosing MINTPunishment !");
+		getLogger().info("Plugin enabled. Thanks for choosing MINTPunishment !");
 	}
 	
 	private void registerListeners() {
-		if(!isEnabled()) return;
 		getServer().getPluginManager().registerEvents(new DataListener(), instance);
 		getServer().getPluginManager().registerEvents(new ChatListener(), instance);
 	}
 
 	private void registerCommands() {
-		if(!isEnabled()) return;
 		commandManager.registerCommands();
 	}
 

@@ -18,82 +18,78 @@ import xyz.mintydev.punishment.util.command.Command;
 import xyz.mintydev.punishment.util.command.CommandRequirement;
 import xyz.mintydev.punishment.util.command.FakeCommand;
 
-/** 
+/**
  * Command manager class
  * 
  * @author MINTY
- * */
+ */
 public class CommandManager implements CommandExecutor {
 
 	private final MINTPunishment main;
 	private Set<Command> commands = new HashSet<>();
 	private CommandMap commandMap;
-	
+
 	public CommandManager(MINTPunishment main) {
 		this.main = main;
-	
+
 		retrieveCommandMap();
-		
-		/* Register the plugin's commands */
+
 		addCommand(new PunishmentCommand(PunishmentType.BAN, PunishmentType.TEMP_BAN, true, "ban", "tempban", "tban"));
 		addCommand(new PunishmentCommand(PunishmentType.BLACKLIST, null, false, "blacklist", "bl"));
 		addCommand(new PunishmentCommand(PunishmentType.MUTE, PunishmentType.TEMP_MUTE, true, "mute", "tempmute", "silence"));
 		addCommand(new PunishmentCommand(PunishmentType.KICK, null, false, "kick"));
-		
+
 		addCommand(new RevokeCommand(PunishmentType.MUTE, "mute", "unmute"));
 		addCommand(new RevokeCommand(PunishmentType.BAN, "ban", "unban"));
 		addCommand(new RevokeCommand(PunishmentType.BLACKLIST, "blacklist", "unblacklist"));
-		
+
 		addCommand(new HistoryCommand("history"));
-		
+
 		registerCommands();
 	}
-	
+
 	private void retrieveCommandMap() {
-        try {
-            Field f = Bukkit.getServer().getClass().getDeclaredField("commandMap");
-            f.setAccessible(true);
-            commandMap = (CommandMap) f.get(Bukkit.getServer());
-        } catch (IllegalAccessException | NoSuchFieldException e) {
-            e.printStackTrace();
-        }
+		try {
+			Field f = Bukkit.getServer().getClass().getDeclaredField("commandMap");
+			f.setAccessible(true);
+			commandMap = (CommandMap) f.get(Bukkit.getServer());
+		} catch (IllegalAccessException | NoSuchFieldException e) {
+			e.printStackTrace();
+		}
 	}
 
 	public void addCommand(Command cmd) {
 		this.commands.add(cmd);
 	}
-	
-	/** 
-	 * Register the commands into the command manager system
-	 * */
+
 	public void registerCommands() {
 		for (Command c : this.getCommands()) {
 			for (String l : c.getAliases()) {
-				/* Register the command into the plugin command map */
 				commandMap.register(l, new FakeCommand(l));
 			}
 		}
 	}
 
-	/** 
-	 * Main Bukkit function that tries all the possible registered commands w/their aliases
-	 * */
+	/**
+	 * Main Bukkit function that tries all the possible registered commands w/their
+	 * aliases
+	 */
 	@Override
 	public boolean onCommand(CommandSender sender, org.bukkit.command.Command command, String label, String[] args) {
 
-		for(Command cmd : commands) {
-			if(cmd.getAliases().contains(label)) {
+		for (Command cmd : commands) {
+			if (cmd.getAliases().contains(label)) {
 				// Check if the player fills all the requirements
-				if(!validRequirements(sender, cmd)) {
+				if (!validRequirements(sender, cmd)) {
 					return false;
 				}
-				
+
 				// Check if the args are correctly provided
-				if(cmd.getMinArgs() > 0 && (args == null || args.length < cmd.getMinArgs())) {
+				if (cmd.getMinArgs() > 0 && (args == null || args.length < cmd.getMinArgs())) {
 					cmd.wrongUsage(sender, label);
 					return false;
 				}
-				if(args != null && cmd.getMaxArgs() > 0 && args.length > cmd.getMaxArgs()) {
+				if (args != null && cmd.getMaxArgs() > 0 && args.length > cmd.getMaxArgs()) {
 					cmd.wrongUsage(sender, label);
 					return false;
 				}
@@ -101,39 +97,39 @@ public class CommandManager implements CommandExecutor {
 				// Execute the command
 				try {
 					cmd.execute(sender, args, label);
-				}catch(Exception e) {
+				} catch (Exception e) {
 					sender.sendMessage(LangManager.getMessage("errors.unknown"));
 					e.printStackTrace();
 					return false;
 				}
 			}
 		}
-		
+
 		return false;
 	}
 
-	/** 
+	/**
 	 * Check if the player has all the valid requirements for a certain command
 	 * 
 	 * @param CommandSender the command sender (console / player)
-	 * @param Command the command object
-	 * */
+	 * @param Command       the command object
+	 */
 	public boolean validRequirements(CommandSender sender, Command cmd) {
-		for(CommandRequirement rq : cmd.getRequirements()) {
-			if(!rq.isValid(sender)) {
+		for (CommandRequirement rq : cmd.getRequirements()) {
+			if (!rq.isValid(sender)) {
 				rq.sendError(sender);
 				return false;
 			}
 		}
 		return true;
 	}
-	
-	/* 
+
+	/*
 	 * Getters & Setters
-	 * */
-	
+	 */
+
 	public Set<Command> getCommands() {
 		return commands;
 	}
-	
+
 }
