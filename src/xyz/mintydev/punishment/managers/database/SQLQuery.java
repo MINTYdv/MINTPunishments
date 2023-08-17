@@ -53,10 +53,6 @@ public enum SQLQuery {
 		this.mySqlQuery = mySqlQuery;
 	}
 	
-	/*
-	 * Getters & Setters
-	 * */
-	
 	@Override
 	public String toString() {
 		return mySqlQuery;

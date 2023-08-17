@@ -1,10 +1,7 @@
 package xyz.mintydev.punishment.util;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-
-import org.bukkit.Bukkit;
 
 public class PaginationUtil<T> {
 
