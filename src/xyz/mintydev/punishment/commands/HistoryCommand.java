@@ -1,4 +1,4 @@
-package xyz.mintydev.punishment.util.command;
+package xyz.mintydev.punishment.commands;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -14,6 +14,8 @@ import xyz.mintydev.punishment.managers.LangManager;
 import xyz.mintydev.punishment.managers.PunishmentManager;
 import xyz.mintydev.punishment.util.PaginationUtil;
 import xyz.mintydev.punishment.util.UUIDFetcher;
+import xyz.mintydev.punishment.util.command.Command;
+import xyz.mintydev.punishment.util.command.PermissionRequirement;
 
 public class HistoryCommand extends Command {
 

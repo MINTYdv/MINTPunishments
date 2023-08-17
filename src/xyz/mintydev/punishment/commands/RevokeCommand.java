@@ -1,4 +1,4 @@
-package xyz.mintydev.punishment.util.command;
+package xyz.mintydev.punishment.commands;
 
 import java.util.List;
 import java.util.UUID;
@@ -10,6 +10,8 @@ import xyz.mintydev.punishment.core.PunishmentType;
 import xyz.mintydev.punishment.managers.LangManager;
 import xyz.mintydev.punishment.managers.PunishmentManager;
 import xyz.mintydev.punishment.util.UUIDFetcher;
+import xyz.mintydev.punishment.util.command.Command;
+import xyz.mintydev.punishment.util.command.PermissionRequirement;
 
 public class RevokeCommand extends Command {
 

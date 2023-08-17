@@ -10,13 +10,13 @@ import org.bukkit.command.CommandMap;
 import org.bukkit.command.CommandSender;
 
 import xyz.mintydev.punishment.MINTPunishment;
+import xyz.mintydev.punishment.commands.HistoryCommand;
+import xyz.mintydev.punishment.commands.PunishmentCommand;
+import xyz.mintydev.punishment.commands.RevokeCommand;
 import xyz.mintydev.punishment.core.PunishmentType;
 import xyz.mintydev.punishment.util.command.Command;
 import xyz.mintydev.punishment.util.command.CommandRequirement;
 import xyz.mintydev.punishment.util.command.FakeCommand;
-import xyz.mintydev.punishment.util.command.HistoryCommand;
-import xyz.mintydev.punishment.util.command.PunishmentCommand;
-import xyz.mintydev.punishment.util.command.RevokeCommand;
 
 /** 
  * Command manager class
