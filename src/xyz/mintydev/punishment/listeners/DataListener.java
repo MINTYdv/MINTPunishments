@@ -7,16 +7,9 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerPreLoginEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 
-import xyz.mintydev.punishment.MINTPunishment;
 import xyz.mintydev.punishment.managers.PunishmentManager;
 
 public class DataListener implements Listener {
-
-	private final MINTPunishment main;
-	
-	public DataListener(MINTPunishment main) {
-		this.main = main;
-	}
 	
     @EventHandler(priority = EventPriority.HIGH)
     public void onConnect(AsyncPlayerPreLoginEvent event) {
