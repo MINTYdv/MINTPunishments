@@ -34,7 +34,7 @@ public class MINTPunishment extends JavaPlugin {
 	
 	private void registerListeners() {
 		if(!isEnabled()) return;
-		getServer().getPluginManager().registerEvents(new DataListener(instance), instance);
+		getServer().getPluginManager().registerEvents(new DataListener(), instance);
 		getServer().getPluginManager().registerEvents(new ChatListener(), instance);
 	}
 
