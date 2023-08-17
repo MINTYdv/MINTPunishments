@@ -47,7 +47,7 @@ public class MINTPunishment extends JavaPlugin {
 		langManager = new LangManager(instance);
 		databaseManager = new DatabaseManager(instance);
 		punishmentManager = new PunishmentManager(instance);
-		commandManager = new CommandManager(instance);
+		commandManager = new CommandManager();
 	}
 
 	@Override

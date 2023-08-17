@@ -25,12 +25,10 @@ import xyz.mintydev.punishment.util.command.FakeCommand;
  */
 public class CommandManager implements CommandExecutor {
 
-	private final MINTPunishment main;
 	private Set<Command> commands = new HashSet<>();
 	private CommandMap commandMap;
 
-	public CommandManager(MINTPunishment main) {
-		this.main = main;
+	public CommandManager() {
 
 		retrieveCommandMap();
 
