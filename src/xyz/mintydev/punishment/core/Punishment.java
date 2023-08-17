@@ -78,12 +78,10 @@ public class Punishment {
 	 * @param boolean silent? (if silent, no broadcast will be shown)
 	 */
 	public void execute(boolean silent) {
-		/* Set default reason */
 		if (reason.length() == 0) {
 			reason = LangManager.getMessage("default-reason");
 		}
 
-		/* Add the punishment to the player history */
 		DatabaseManager.get().executeStatement(SQLQuery.INSERT_PUNISHMENT_HISTORY, type.name(),
 				getPlayerUUID().toString(), getPlayerName(), getOperator() == null ? null : getOperator().toString(),
 				getOperatorName(), getStartDate().getTime(), getEndDate() != null ? getEndDate().getTime() : null,
@@ -105,12 +103,9 @@ public class Punishment {
 			}
 		}
 
-		/* Add the punishment to the cache */
-		// Check if player is online
 		if (PunishmentManager.get().isCached(playerUUID.toString())) {
 			PunishmentManager.get().getLoadedPunishments().add(this);
 
-			// kick player if online & ban/tempban
 			if (this.type == PunishmentType.BAN || this.type == PunishmentType.BLACKLIST
 					|| this.type.getBase() == PunishmentType.BAN || this.type == PunishmentType.KICK) {
 				Bukkit.getPlayer(playerName).kickPlayer(this.getKickLayout());
@@ -118,7 +113,6 @@ public class Punishment {
 		}
 		PunishmentManager.get().getHistoryPunishments().add(this);
 
-		/* Broadcast */
 		if (!silent) {
 			for (String str : LangManager.getMessageList(this.type.getLangPath() + ".broadcast")) {
 				str = replaceWithValues(str);
