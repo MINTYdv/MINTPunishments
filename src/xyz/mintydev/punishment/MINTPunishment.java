@@ -59,10 +59,6 @@ public class MINTPunishment extends JavaPlugin {
 		getLogger().info("Plugin disabled. Thanks for choosing MINTPunishment !");
 	}
 	
-	/*
-	 * Getters & Setters
-	 * */
-	
 	public ConfigManager getConfigManager() {
 		return configManager;
 	}
