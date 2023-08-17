@@ -52,8 +52,8 @@ public class PunishmentManager {
 	public String tryConnection(String name, UUID uuid) {
 		final PlayerProfile profile = load(name, uuid);
 		
-		final Punishment ban = profile.getBan();
-		final Punishment bl = profile.getBlacklist();
+		final Punishment ban = profile.getPunishment(PunishmentType.BAN);
+		final Punishment bl = profile.getPunishment(PunishmentType.BLACKLIST);
 		
 		if(ban == null && bl == null) {
 			// No ban, add the profile to the cache

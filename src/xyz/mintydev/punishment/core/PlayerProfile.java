@@ -39,18 +39,9 @@ public class PlayerProfile {
     	PunishmentManager.get().addCached(this);
     }
     
-    public Punishment getBlacklist() {
+    public Punishment getPunishment(PunishmentType type) {
         for (final Punishment pt : punishments) {
-            if (pt.getType() == PunishmentType.BLACKLIST || pt.getType().getBase() == PunishmentType.BLACKLIST && !pt.isExpired()) {
-                return pt;
-            }
-        }
-        return null;
-    }
-    
-    public Punishment getBan() {
-        for (final Punishment pt : punishments) {
-            if (pt.getType() == PunishmentType.BAN || pt.getType().getBase() == PunishmentType.BAN && !pt.isExpired()) {
+            if (pt.getType() == type || pt.getType().getBase() == type && !pt.isExpired()) {
                 return pt;
             }
         }
